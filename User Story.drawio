@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0" version="26.0.11">
   <diagram name="Halaman-1" id="6O-18y5EeGYBOs01HTLQ">
-    <mxGraphModel dx="2514" dy="2512" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2933" dy="2736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -47,10 +47,10 @@
           <mxGeometry x="1040" y="280" width="260" height="260" as="geometry" />
         </mxCell>
         <mxCell id="48zcx6iP8NL2WuZg9flx-19" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;Mengupdate data yang ada pada space yang sudah ditentukan seperti data Guru, Siswa, Jumlah prestasi, Jumlah Ekstra&lt;/font&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="1880" y="-75" width="260" height="260" as="geometry" />
+          <mxGeometry x="1440" y="-75" width="260" height="260" as="geometry" />
         </mxCell>
         <mxCell id="48zcx6iP8NL2WuZg9flx-20" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;Menambah Informasi terkait PPDB saat ini atau mengedit kembali&lt;/font&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
-          <mxGeometry x="2260" y="-75" width="260" height="260" as="geometry" />
+          <mxGeometry x="1840" y="-75" width="260" height="260" as="geometry" />
         </mxCell>
         <mxCell id="48zcx6iP8NL2WuZg9flx-21" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;Menambah Informasi terkait PPDB saat ini atau mengedit kembali&lt;/font&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
           <mxGeometry x="2670" y="-75" width="260" height="260" as="geometry" />
