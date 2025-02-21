@@ -1,5 +1,5 @@
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "@/app/components/Footer";
+import Header from "@/app/components/Header";
 
 const Profile = () => {
   return (
@@ -62,17 +62,17 @@ const Profile = () => {
       </section>
       {/*        
       <!-- Statistik Sekolah --> */}
-      <section className="container mx-auto my-8 bg-teal-700 text-black p-6 rounded-lg flex justify-around text-center">
+      <section className="container mx-auto my-8 bg-teal-700 text-white p-6 rounded-lg flex justify-around text-center">
         <div>
           <i className="fas fa-chalkboard-teacher text-4xl"></i>
-          <p className="text-2xl font-bold">20</p>
+          <p className="text-2xl font-bold">20</p> 
         </div>
         <div>
           <i className="fas fa-user-graduate text-4xl"></i>
           <p className="text-2xl font-bold">210</p>
         </div>
         <div>
-          <i className="fas fa-trophy text-4xl"></i>
+          <i className="fas fa-trophy text-4xl "></i>
           <p className="text-2xl font-bold">7</p>
         </div>
         <div>

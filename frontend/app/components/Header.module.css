@@ -1,17 +1,19 @@
-.btn{
+.btn {
   font-size: 17px;
   background: transparent;
   border: none;
   font-weight: bold;
-  padding: 1em 1.5em;
+  padding: 0.4em 0.8em;
   color: white;
-  text-transform: uppercase;
   position: relative;
   transition: 0.5s ease;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 1.5;
 }
 
-.btn::before{
+.btn::before {
   content: "";
   position: absolute;
   left: 0;
@@ -22,29 +24,83 @@
   transition: 0.5s ease;
 }
 
-.btn:hover{
-  color: yellow;
+.btn:hover {
+  color: rgb(231, 214, 33);
   transition-delay: 0.5s;
 }
 
-.btn:hover::before{
+.btn:hover::before {
   width: 100%;
 }
 
-.btn::after{
+.btn::after {
   content: "";
   position: absolute;
   left: 0;
   bottom: 0;
   height: 0;
   width: 100%;
-  background-color:rgb(34, 187, 85);
+  background-color: rgb(34, 187, 85);
   transition: 0.4s ease;
   z-index: -1;
 }
 
-.btn:hover::after{
+.btn:hover::after {
   height: 100%;
   transition-delay: 0.4s;
-  color: aliceblue;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #2d3748;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  overflow: hidden;
+  min-width: 300px;
+  white-space: nowrap;
+}
+
+.dropdownItem {
+  display: block;
+  padding: 0.5em 1em;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #4a5568;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp{
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.dropdownAnimation {
+  animation: slideDown 0.3s ease-out;
+}
+
+.dropdownAnimation {
+  animation: slideDown 0.3s ease-out;
 }
