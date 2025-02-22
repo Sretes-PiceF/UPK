@@ -6,39 +6,51 @@ const Page = () => {
     return (
         <>
             <Header />
-            <div className="flex m-[50px]">
-                <div className="w-1/4 bg-gray-200 p-10">
-                    <p>Konten Samping Kiri</p>
+            {/* Container Utama */}
+            <div className="flex flex-col md:flex-row m-[50px] gap-6 ml-[180px]">
+                {/* Sisi Kiri */}
+                <div className="w-full w-[200px] bg-gray-200 p-10">
+                    <p className="text-center">Konten Samping Kiri</p>
                 </div>
 
-                <div className="w-1/2 p-4 text-center">
-                    <img src="/images/img-upk/ppdb2024.jpg" className="w-[300px] h-[300px] ml-[85px]"/>
+                {/* Container Gambar Tengah */}
+                <div className="flex flex-col md:flex-row w-full md:w-1/2 gap-4 justify-center">
+                    <div className="flex justify-center">
+                        <img
+                            src="/images/img-upk/ppdb2024.jpg"
+                            className="w-[300px] h-[300px] object-cover"
+                            alt="PPDB 2024"
+                        />
+                    </div>
+                    <div className="flex justify-center">
+                        <img
+                            src="/images/img-upk/pppdb2025.jpg"
+                            className="w-[300px] h-[300px] object-cover"
+                            alt="PPDB 2025"
+                        />
+                    </div>
                 </div>
 
-                <div className="w-1/2 p-4 text-center">
-                    <img src="/images/img-upk/pppdb2025.jpg" className="w-[300px] h-[300px] ml-[-2px]"/>
-                </div>
-
-                <div className="w-1/4 bg-gray-200 p-10">
-                    <p>Konten Samping Kanan</p>
+                {/* Sisi Kanan */}
+                <div className="w-full w-[200px] bg-gray-200 p-10">
+                    <p className="text-center">Konten Samping Kanan</p>
                 </div>
             </div>
-            <div className="relative w-full h-[350px] mt-[100px] drop-shadow-2xl">
-                {/* Container untuk No Telpon Pengurus di kiri bawah */}
-                <div className="absolute bottom-5 left-5 w-[300 h-[100] p-5 bg-gray-500 rounded-lg shadow-lg flex flex-col justify-start">
-                    {/* Teks "Ini bagian pengurus" di atas */}
-                    <div className="text-center mb-4">
-                        <h1 className="text-sm font-semibold text-white">Info PPDb Janga lupa untuk Join:</h1>
-                    </div>
 
-                    {/* Daftar No Telpon di bawah */}
+            {/* Container untuk No Telpon dan Google Maps */}
+            <div className="relative w-full h-[350px] mt-[100px] drop-shadow-2xl">
+                {/* Container No Telpon Pengurus di Kiri Bawah */}
+                <div className="absolute bottom-5 left-5 w-[300px] h-[150px] p-5 bg-gray-500 rounded-lg shadow-lg flex flex-col justify-start">
+                    <div className="text-center mb-4">
+                        <h1 className="text-sm font-semibold text-white">Info PPDB Jangan lupa untuk Join:</h1>
+                    </div>
                     <div className="flex flex-col gap-2">
                         <a href="https://wa.me/6281216146759/" className="text-sm font-semibold text-white">081216146759 | Bu Dia</a>
                         <a href="https://wa.me/6281230662365/" className="text-sm font-semibold text-white">081230662365 | Bu Indah</a>
                     </div>
                 </div>
 
-                {/* Kotak Lokasi Google Maps di kanan bawah */}
+                {/* Kotak Lokasi Google Maps di Kanan Bawah */}
                 <div className="absolute bottom-5 right-5 w-[700px] h-[300px] p-5 bg-gray-100 rounded-lg shadow-lg">
                     <div className="absolute inset-0 border-4 border-white rounded-lg pointer-events-none"></div>
                     <iframe
@@ -54,7 +66,7 @@ const Page = () => {
             </div>
             <Footer />
         </>
-    )
-}
+    );
+};
 
-export default Page
+export default Page;
