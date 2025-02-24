@@ -9,7 +9,7 @@ const Page = () => {
             {/* Container Utama */}
             <div className="flex flex-col md:flex-row m-[50px] gap-6 ml-[180px]">
                 {/* Sisi Kiri */}
-                <div className="w-full w-[200px] bg-gray-200 p-10">
+                <div className="w-[200px] bg-gray-200 p-10">
                     <p className="text-center">Konten Samping Kiri</p>
                 </div>
 
@@ -32,7 +32,7 @@ const Page = () => {
                 </div>
 
                 {/* Sisi Kanan */}
-                <div className="w-full w-[200px] bg-gray-200 p-10">
+                <div className="w-[200px] bg-gray-200 p-10">
                     <p className="text-center">Konten Samping Kanan</p>
                 </div>
             </div>
