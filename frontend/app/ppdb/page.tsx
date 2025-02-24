@@ -13,6 +13,8 @@ const Page = () => {
                     <p className="text-center">Konten Samping Kiri</p>
                 </div>
 
+
+
                 {/* Container Gambar Tengah */}
                 <div className="flex flex-col md:flex-row w-full md:w-1/2 gap-4 justify-center">
                     <div className="flex justify-center">
