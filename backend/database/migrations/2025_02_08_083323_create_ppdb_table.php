@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('ppdb', function (Blueprint $table) {
             $table->string('ppdb_id', 16)->primary()->nullable(false);
+            $table->string('ppdb_deskripsi1', 16)->nullable(false);            
+            $table->string('ppdb_deskripsi2', 16)->nullable(false);            
+            $table->string('ppdb_notelp', 16)->nullable(false);            
+            $table->string('ppdb_namaguru', 16)->nullable(false);         
             $table->string('ppdb_url_gambar')->nullable();
 });
     }

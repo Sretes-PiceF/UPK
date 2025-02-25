@@ -15,8 +15,9 @@ return new class extends Migration
             $table->string('prestasi_id', 16)->primary()->nullable(false);
             $table->string('prestasi_juara', 225)->nullable(false);
             $table->string('prestasi_namasiswa', 225)->nullable(false);
-            $table->string('prestasi_kelassiwa', 225)->nullable(false);
-            $table->date('prestasi_tahun', 4)->nullable(false);
+            $table->string('prestasi_deskripsi', 225)->nullable(false);
+            $table->string('prestasi_url_gambar')->nullable();
+            
             
         });
     }
