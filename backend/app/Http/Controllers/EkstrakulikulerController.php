@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class EkstrakulikulerController extends Controller
 {
-    
+
     public function index()
     {
         $data = ekstrakulikuler::all();
@@ -38,7 +38,7 @@ class EkstrakulikulerController extends Controller
         return response()->json(data: $data);
     }
 
-    
+
     public function show(ekstrakulikuler $ekstrakulikuler)
     {
         $ekstrakulikuler = ekstrakulikuler::where('id', $ekstrakulikuler)->first();
@@ -56,7 +56,7 @@ class EkstrakulikulerController extends Controller
         //
     }
 
-   
+
     public function destroy($ekstrakulikuler_id)
     {
         $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
@@ -71,6 +71,5 @@ class EkstrakulikulerController extends Controller
             "msg" => "berhasil ke delete kawan",
             "data" => $ekstrakulikuler
         ]);
-        
     }
 }
