@@ -10,6 +10,9 @@ class ekstrakulikuler extends Model
     /** @use HasFactory<\Database\Factories\EkstrakulikulerFactory> */
     use HasFactory;
 protected $table = "ekstrakulikuler";
+protected $primaryKey = 'ekstrakulikuler_id';
+protected $keyType = "string";
+
 
     public $timestamps = false;
 

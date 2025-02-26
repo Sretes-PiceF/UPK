@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\ekstrakulikuler;
 use App\Http\Requests\StoreekstrakulikulerRequest;
 use App\Http\Requests\UpdateekstrakulikulerRequest;
+use Illuminate\Http\Request;
 
 class EkstrakulikulerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
         $data = ekstrakulikuler::all();
@@ -22,7 +21,7 @@ class EkstrakulikulerController extends Controller
 
     }
 
-    public function store(StoreekstrakulikulerRequest $request)
+    public function store(Request $request)
     {
         $request->validate ([
           "ekstrakulikuler_judul" => "required|max:255",
@@ -41,9 +40,7 @@ class EkstrakulikulerController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
+    
     public function show(ekstrakulikuler $ekstrakulikuler)
     {
         $ekstrakulikuler = ekstrakulikuler::where('id', $ekstrakulikuler)->first();
@@ -62,11 +59,21 @@ class EkstrakulikulerController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ekstrakulikuler $ekstrakulikuler)
+   
+    public function destroy($ekstrakulikuler_id)
     {
-        //
+        $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
+
+        if (!$ekstrakulikuler) {
+            return response()->json(["msg" => "tidak ketemu"], 404);
+        }
+
+        $ekstrakulikuler->delete();
+
+        return response()->json([
+            "msg" => "berhasil ke delete kawan",
+            "data" => $ekstrakulikuler
+        ]);
+        
     }
 }

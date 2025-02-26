@@ -73,18 +73,19 @@ class PpdbController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($ppdb)
+    public function destroy($ppdb_id)
     {
-        $ppdb = ppdb::where('ppdb_id', $ppdb)->first();
+        $ppdb = ppdb::find($ppdb_id);
 
         if(!$ppdb) {
-            return response()->json(["msg" => "ppdb no comment"], 404);
+            return response()->json (["msg" => "ppdb no comment"], 404);
         }
 
         $ppdb->delete();
 
-        return response()->json([
-            'message' => 'Telah terhapus'
+        return response()->json ([
+            "message" => "Telah terhapus",
+            "data" => $ppdb
         ]);
     }
 }
