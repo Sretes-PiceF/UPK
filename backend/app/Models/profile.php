@@ -9,4 +9,9 @@ class profile extends Model
 {
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
+protected $table = "profile";
+
+    public $timestamps = false;
+
+    protected $guarded = [];
 }

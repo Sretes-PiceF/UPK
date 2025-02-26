@@ -13,23 +13,32 @@ class EkstrakulikulerController extends Controller
      */
     public function index()
     {
-        //
+        $data = ekstrakulikuler::all();
+
+        return response()->json([
+            "message" => "success",
+            $data
+        ]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreekstrakulikulerRequest $request)
     {
-        //
+        $request->validate ([
+          "ekstrakulikuler_judul" => "required|max:255",
+          "ekstrakulikuler_deskripsi" => "required|max:255",
+        ]);
+
+        $ekstrakulikuler = uniqid();
+
+        $data = ekstrakulikuler::create([
+            'ekstrakulikuler_id' => $ekstrakulikuler,
+            'ekstrakulikuler_judul' => $request->ekstrakulikuler_judul,
+            'ekstrakulikuler_deskripsi' => $request->ekstrakulikuler_deskripsi
+        ]);
+
+        return response()->json(data:$data);
+
     }
 
     /**
@@ -37,20 +46,17 @@ class EkstrakulikulerController extends Controller
      */
     public function show(ekstrakulikuler $ekstrakulikuler)
     {
-        //
+        $ekstrakulikuler = ekstrakulikuler::where('id', $ekstrakulikuler)->first();
+
+        if(!$ekstrakulikuler){
+            return response()->json(["massage" => "data invicible", 404]);
+        }
+
+        return response()->json($ekstrakulikuler);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ekstrakulikuler $ekstrakulikuler)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
     public function update(UpdateekstrakulikulerRequest $request, ekstrakulikuler $ekstrakulikuler)
     {
         //

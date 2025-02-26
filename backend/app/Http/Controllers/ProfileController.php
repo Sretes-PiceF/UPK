@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\profile;
 use App\Http\Requests\StoreprofileRequest;
 use App\Http\Requests\UpdateprofileRequest;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
@@ -13,31 +14,42 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $data = profile::all();
+
+        return response()->json([
+            "message" => "success",
+            $data
+        ]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+   
+    public function store(Request $request)
     {
-        //
-    }
+        $request->validate ([
+            "profile_guru" => "required |max:255",
+            "profile_siswa" => "required |max:225"
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreprofileRequest $request)
-    {
-        //
+        $data = profile::create($request->all());
+
+        return response()->json(data:$data);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(profile $profile)
+    public function show($profile)
     {
-        //
+        $profile = profile::where('id', $profile)->first();
+
+        if(!$profile){
+            return response()->json(["massage" => "data invicible", 404]);
+        }
+
+        return response()->json($profile);
+
     }
 
     /**

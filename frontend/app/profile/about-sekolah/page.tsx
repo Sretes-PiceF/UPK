@@ -65,7 +65,7 @@ const Profile = () => {
       <section className="container mx-auto my-8 bg-teal-700 text-white p-6 rounded-lg flex justify-around text-center">
         <div>
           <i className="fas fa-chalkboard-teacher text-4xl"></i>
-          <p className="text-2xl font-bold">20</p> 
+          <p className="text-2xl font-bold">20</p>
         </div>
         <div>
           <i className="fas fa-user-graduate text-4xl"></i>
@@ -85,7 +85,7 @@ const Profile = () => {
         <h3 className="text-xl font-semibold mb-4">Bagian bawah profil</h3>
 
         {/* <!-- Baris Pertama --> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 items-center">
           {/* <!-- Gambar --> */}
           <div>
             <img
@@ -95,29 +95,24 @@ const Profile = () => {
             />
           </div>
 
-          {/* <!-- Container Teks (Geser ke Kiri) --> */}
-          <div className="bg-gray-200 rounded-lg shadow-md p-4 w-96 m-40 ml-2">
+          {/* <!-- Container Teks --> */}
+          <div className="bg-gray-200 rounded-lg shadow-md ml-2 p-[40px] w-full h-[250px] md:w-80 mx-auto text-center flex items-center">
             <p className="italic">
-              “SMP PGRI 6 MALANG adalah sekolah yang penuh dengan nilai-nilai
-              budaya dan kelestarian tentang alam, kita diajarkan untuk hidup
-              terus bersyukur kepada Tuhan Yang Maha Esa dan tetap saling
-              toleransi antar teman, antar guru, dan antar umat beragama.”
+              “SMP PGRI 6 MALANG adalah sekolah yang penuh dengan nilai-nilai budaya dan kelestarian tentang alam, kita diajarkan untuk hidup terus bersyukur kepada Tuhan Yang Maha Esa dan tetap saling toleransi antar teman, antar guru, dan antar umat beragama.”
             </p>
           </div>
         </div>
 
         {/* <!-- Baris Kedua --> */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          {/* <!-- Container Teks (Geser ke Kanan) --> */}
-          <div className="bg-gray-200 rounded-lg shadow-md p-4 w-96 m-40 ml-52 text-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 items-center">
+          {/* <!-- Container Teks --> */}
+          <div className="bg-gray-200 rounded-lg shadow-md mr-2 p-[50px] w-full h-[250px] md:w-80 mx-auto text-center flex items-center">
             <p className="italic">
-              “Jangan pernah menyia-nyiakan kesempatan karena di mana kesempatan
-              yang datang kepada kita itu adalah nikmat Tuhan untuk memberikan
-              jalan menuju kesuksesan...”
+              “Jangan pernah menyia-nyiakan kesempatan karena di mana kesempatan yang datang kepada kita itu adalah nikmat Tuhan untuk memberikan jalan menuju kesuksesan...”
             </p>
           </div>
-          {/*       
-              <!-- Gambar --> */}
+
+          {/* <!-- Gambar --> */}
           <div>
             <img
               src="/images/UPK/sekolah 2.jpg"
@@ -126,6 +121,7 @@ const Profile = () => {
             />
           </div>
         </div>
+
       </section>
       <Footer />
     </>
