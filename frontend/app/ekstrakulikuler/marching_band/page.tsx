@@ -14,7 +14,7 @@ const Marching = () => {
                                 <img src="/images/img-UPK/marching_band.jpg" alt="Tim Marching band" className="rounded-lg shadow-md w-full md:w-[600px] h-[400px] object-cover" />
                             </div>
                             <div className="bg-gray-200 p-6 rounded-lg shadow-md">
-                                <h2 className="text-xl font-bold text-center md:text-left">Futsal (SPRINAM)</h2>
+                                <h2 className="text-xl font-bold text-center md:text-left">Marcing Band (SPRINAM)</h2>
                                 <p className="italic mt-2">
                                     Dalam drumband, kita bekerja sama untuk menghasilkan penampilan yang harmonis,
                                     mengajarkan pentingnya kerjasama, komunikasi, dan saling mendukung.

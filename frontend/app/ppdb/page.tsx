@@ -10,30 +10,33 @@ const Page = () => {
             <div className="flex flex-col md:flex-row m-[50px] gap-6 ml-[180px]">
                 {/* Sisi Kiri */}
                 <div className="w-full w-[200px] bg-gray-200 p-10">
-                    <p className="text-center">Konten Samping Kiri</p>
+                    <p className="text-center">Info penting bolo??
+                    Kenali dulu soal PPDB akan dibuka di SMP PGRI 6 Malang!!!
+                        </p>
                 </div>
 
                 {/* Container Gambar Tengah */}
-                <div className="flex flex-col md:flex-row w-full md:w-1/2 gap-4 justify-center">
-                    <div className="flex justify-center">
-                        <img
-                            src="/images/img-upk/ppdb2024.jpg"
-                            className="w-[300px] h-[300px] object-cover"
-                            alt="PPDB 2024"
-                        />
-                    </div>
-                    <div className="flex justify-center">
-                        <img
-                            src="/images/img-upk/pppdb2025.jpg"
-                            className="w-[300px] h-[300px] object-cover"
-                            alt="PPDB 2025"
-                        />
-                    </div>
-                </div>
+                <div className="flex flex-col md:flex-row w-full gap-4 justify-center items-center">
+    <div className="flex justify-center">
+        <img
+            src="/images/img-upk/ppdb2024.jpg"
+            className="w-full max-w-[300px] h-auto object-cover rounded-lg"
+            alt="PPDB 2024"
+        />
+    </div>
+    <div className="flex justify-center">
+        <img
+            src="/images/img-upk/pppdb2025.jpg"
+            className="w-full max-w-[300px] h-auto object-cover rounded-lg"
+            alt="PPDB 2025"
+        />
+    </div>
+</div>
+
 
                 {/* Sisi Kanan */}
                 <div className="w-full w-[200px] bg-gray-200 p-10">
-                    <p className="text-center">Konten Samping Kanan</p>
+                    <p className="text-center">Siap untuk berkarya dan terus maju!!!</p>
                 </div>
             </div>
 
