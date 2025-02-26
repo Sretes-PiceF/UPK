@@ -19,14 +19,13 @@ class EkstrakulikulerController extends Controller
             "message" => "success",
             $data
         ]);
-
     }
 
     public function store(StoreekstrakulikulerRequest $request)
     {
-        $request->validate ([
-          "ekstrakulikuler_judul" => "required|max:255",
-          "ekstrakulikuler_deskripsi" => "required|max:255",
+        $request->validate([
+            "ekstrakulikuler_judul" => "required|max:255",
+            "ekstrakulikuler_deskripsi" => "required|max:255",
         ]);
 
         $ekstrakulikuler = uniqid();
@@ -37,8 +36,7 @@ class EkstrakulikulerController extends Controller
             'ekstrakulikuler_deskripsi' => $request->ekstrakulikuler_deskripsi
         ]);
 
-        return response()->json(data:$data);
-
+        return response()->json(data: $data);
     }
 
     /**
@@ -48,15 +46,14 @@ class EkstrakulikulerController extends Controller
     {
         $ekstrakulikuler = ekstrakulikuler::where('id', $ekstrakulikuler)->first();
 
-        if(!$ekstrakulikuler){
+        if (!$ekstrakulikuler) {
             return response()->json(["massage" => "data invicible", 404]);
         }
 
         return response()->json($ekstrakulikuler);
-
     }
 
-    
+
     public function update(UpdateekstrakulikulerRequest $request, ekstrakulikuler $ekstrakulikuler)
     {
         //
