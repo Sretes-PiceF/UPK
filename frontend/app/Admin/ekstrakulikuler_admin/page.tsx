@@ -19,6 +19,7 @@ const Halpertama = () => {
                             <thead>
                                 <tr className="bg-gray-200">
                                     <th className="px-4 py-2 border">No</th>
+                                    <th className="px-4 py-2 border">Judul</th>
                                     <th className="px-4 py-2 border">Deskripsi</th>
                                     <th className="px-4 py-2 border">Gambar</th>
                                     <th className="px-4  py-2 border">Aksi</th>
@@ -27,6 +28,7 @@ const Halpertama = () => {
                             <tbody>
                                 <tr>
                                     <td className="px-4 py-2 border">1</td>
+                                    <td className="px-4 py-2 border">Futsal</td>
                                     <td className="px-4 py-2 border">Halo halo hai</td>
                                     <td className="px-4 py-2 border">Files.jpg</td>
                                     <td className="px-4 py-2 border">

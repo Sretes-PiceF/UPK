@@ -22,6 +22,7 @@ const HalPertama = () => {
                                     <th className="px-4 py-2 border">Judul Juara</th>
                                     <th className="px-4 py-2 border">Nama</th>
                                     <th className="px-4 py-2 border">Deskripsi</th>
+                                    <th className="px-4 py-2 border">Gambar</th>
                                     <th className="px-4 py-2 border">Aksi</th>
                                 </tr>
                             </thead>
@@ -31,6 +32,7 @@ const HalPertama = () => {
                                     <td className="px-4 py-2 border">Juara 1</td>
                                     <td className="px-4 py-2 border">Mohammad Zulkipli</td>
                                     <td className="px-4 py-2 border">Dia pemenang efootball-priode 2024 u-12</td>
+                                    <td className="px-4 py-2 border">Files.jpg</td>
                                     <td className="px-4 py-2 border">
                                         <div className="flex space-x-2">
                                         <Link href="/Admin/prestasi_admin/update_admin">
