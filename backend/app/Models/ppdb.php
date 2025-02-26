@@ -10,7 +10,8 @@ class ppdb extends Model
     /** @use HasFactory<\Database\Factories\PpdbFactory> */
     use HasFactory;
 protected $table = 'ppdb';
-
+protected $primaryKey = 'ppdb_id';
+protected $keyType = "string";
 public $timestamps = false;
 
 protected $fillable = [
