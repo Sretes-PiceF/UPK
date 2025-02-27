@@ -16,26 +16,29 @@ class EkstrakulikulerController extends Controller
 
         return response()->json([
             "message" => "success",
-            $data
+            "data" => $data
         ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            "ekstrakulikuler_judul" => "required|max:255",
-            "ekstrakulikuler_deskripsi" => "required|max:255",
+            "*.ekstrakulikuler_judul" => "required|max:255",
+            "*.ekstrakulikuler_deskripsi" => "required|max:5000",
         ]);
 
-        $ekstrakulikuler = uniqid();
+        $data = request()->all();
+        $saveData = [];
 
-        $data = ekstrakulikuler::create([
-            'ekstrakulikuler_id' => $ekstrakulikuler,
-            'ekstrakulikuler_judul' => $request->ekstrakulikuler_judul,
-            'ekstrakulikuler_deskripsi' => $request->ekstrakulikuler_deskripsi
+        foreach ($data as $item) {
+
+        $saveData [] = ekstrakulikuler::create([
+            'ekstrakulikuler_id' => uniqid(),
+            'ekstrakulikuler_judul' => $item['ekstrakulikuler_judul'],
+            'ekstrakulikuler_deskripsi' => $item['ekstrakulikuler_deskripsi']
         ]);
-
-        return response()->json(data: $data);
+    }
+        return response()->json($saveData);
     }
 
 
