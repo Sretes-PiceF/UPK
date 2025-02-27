@@ -17,8 +17,8 @@ class PpdbController extends Controller
         $data = ppdb::all();
 
         return response()->json([
-            "message" => "yeay!!!",
-            $data
+            "message" => "yeay!!!", 
+            "data" => $data
         ]);
 
     }
@@ -65,9 +65,26 @@ class PpdbController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateppdbRequest $request, ppdb $ppdb)
+    public function update($ppdb_id, Request $request)
     {
-        //
+        $ppdb = ppdb::find($ppdb_id);
+        if(!$ppdb) {
+            return response()->json(["msg" => "tidak dapat termuat"]);
+        }
+
+        $request->validate([
+            "ppdb_deskripsi1" => "required|max:255",            
+            "ppdb_deskripsi2" => "required|max:255",
+            "ppdb_notelp" => "required|max:255",
+            "ppdb_namaguru"	=> "required|max:255"
+        ]);
+
+        $ppdb->update($request->all());
+
+        return response()->json([
+            "msg" => "sukses",
+            "data" => $ppdb
+        ]);
     }
 
     /**
