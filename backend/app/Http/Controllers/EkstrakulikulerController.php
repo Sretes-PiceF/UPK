@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class EkstrakulikulerController extends Controller
 {
-    
+
     public function index()
     {
         $data = ekstrakulikuler::all();
@@ -38,10 +38,10 @@ class EkstrakulikulerController extends Controller
         return response()->json(data: $data);
     }
 
-    
+
     public function show(ekstrakulikuler $ekstrakulikuler)
     {
-        $ekstrakulikuler = ekstrakulikuler::where('id', $ekstrakulikuler)->first();
+        $ekstrakulikuler = ekstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler)->first();
 
         if (!$ekstrakulikuler) {
             return response()->json(["massage" => "data invicible", 404]);
@@ -51,12 +51,27 @@ class EkstrakulikulerController extends Controller
     }
 
 
-    public function update(UpdateekstrakulikulerRequest $request, ekstrakulikuler $ekstrakulikuler)
+    public function update($ekstrakulikuler_id, Request $request)
     {
-        //
+        $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
+        if(!$ekstrakulikuler) {
+            return response()->json(["msg" => "tidak dapat termuat"]);
+        }
+
+        $request->validate([
+            "ekstrakulikuler_judul" => "required|max:255",
+            "ekstrakulikuler_deskripsi" => "required|max:255",
+        ]);
+
+        $ekstrakulikuler->update($request->all());
+
+        return response()->json([
+            "msg" => "sukses",
+            "data" => $ekstrakulikuler
+        ]);
     }
 
-   
+
     public function destroy($ekstrakulikuler_id)
     {
         $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
@@ -71,6 +86,5 @@ class EkstrakulikulerController extends Controller
             "msg" => "berhasil ke delete kawan",
             "data" => $ekstrakulikuler
         ]);
-        
     }
 }
