@@ -2,6 +2,9 @@ import styles from './styles/Login.module.css';
 
 const Login = () => {
     return (
+        <div className={styles.background} >
+
+    
         <div className={styles.loginContainer}>
             <img src="/images/UPK/logo.png" alt="Logo" />
             <h2>Persatuan Guru</h2>
@@ -23,6 +26,7 @@ const Login = () => {
             <p className={styles.footer}>
                 Jl. Kolonel Sugiono III No.82, Ciptomulyo, Kec. Sukun, Kota Malang, Jawa Timur 65148
             </p>
+        </div>
         </div>
     );
 };
