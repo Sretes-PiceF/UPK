@@ -10,3 +10,4 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource("/profile", ProfileController::class);
 Route::apiResource("/ppdb", PpdbController::class);
 Route::apiResource("/ekstrakulikuler", EkstrakulikulerController::class);
+Route::apiResource("/prestasi", PrestasiController::class);

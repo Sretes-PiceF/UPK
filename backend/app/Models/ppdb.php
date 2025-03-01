@@ -15,7 +15,7 @@ protected $keyType = "string";
 public $timestamps = false;
 
 protected $fillable = [
-    'ppdb_id',
+    'ppdb_id', 
     'ppdb_deskripsi1',	
     'ppdb_deskripsi2',
     'ppdb_notelp_1',
