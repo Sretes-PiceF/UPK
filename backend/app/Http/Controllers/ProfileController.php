@@ -51,14 +51,7 @@ class ProfileController extends Controller
         return response()->json($profile);
 
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(profile $profile)
-    {
-        //
-    }
+    
 
     /**
      * Update the specified resource in storage.
