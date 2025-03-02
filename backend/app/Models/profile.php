@@ -9,9 +9,18 @@ class profile extends Model
 {
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
-protected $table = "profile";
+    protected $table = "profile";
+    protected $primaryKey = "profile_id";
+    
 
+    protected $keyType = "string";
     public $timestamps = false;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'profile_id',
+        'profile_guru',
+        'profile_siswa',
+        'jumlah_prestasi',
+        'jumlah_ekstrakulikuler'
+    ];
 }
