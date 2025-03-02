@@ -23,3 +23,4 @@ class prestasi extends Model
         'profile_ekstrakulikuler_id'
     ];
 }
+
