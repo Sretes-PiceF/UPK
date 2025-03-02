@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('profile', function (Blueprint $table) {
             $table->string('profile_id', 16)->primary()->nullable(false);
-            $table->char('profile_guru', 225)->nullable(false);
-            $table->char('profile_siswa', 225)->nullable(false);
-            $table->char('profile_prestasi_id', 225)->nullable(false);
-            $table->char('profile_ekstrakulikuler_id', 225)->nullable(false);
+            $table->integer('profile_guru')->nullable(false);
+            $table->integer('profile_siswa')->nullable(false);
+            $table->integer('jumlah_prestasi')->default(0);
+            $table->integer('jumlah_ekstrakulikuler')->default(0);
 
             //Membuat Foreign Key(penyambungan colom antar table)
-            $table->foreign('profile_prestasi_id')->references('prestasi_id')->on('prestasi')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('profile_ekstrakulikuler_id')->references('ekstrakulikuler_id')->on('ekstrakulikuler')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('profile_prestasi_id')->references('prestasi_id')->on('prestasi')->onDelete('cascade')->onUpdate('cascade');
+            // $table->foreign('profile_ekstrakulikuler_id')->references('ekstrakulikuler_id')->on('ekstrakulikuler')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
