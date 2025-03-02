@@ -22,4 +22,21 @@ protected $keyType = "string";
         'ekstrakulikuler_deskripsi',
         'ekstrakulikuler_url_gambar'
     ];
+
+    public static function boot(){
+        parent::boot();
+        static::saved(function(){
+            self::updateProfileCounts();
+        });
+
+        static::deleted(function() {
+            self::updateProfileCounts();
+        });
+    }
+
+    private static function updateProfileCounts (){
+        $jumlahDataEkstrakulikuler = self::count();
+
+        profile::query()->update(['jumlah_ekstrakulikuler' => $jumlahDataEkstrakulikuler]);
+    }
 }

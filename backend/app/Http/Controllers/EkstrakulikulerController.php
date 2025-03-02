@@ -58,7 +58,7 @@ class EkstrakulikulerController extends Controller
     {
         $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
         if(!$ekstrakulikuler) {
-            return response()->json(["msg" => "tidak dapat termuat"]);
+            return response()->json(["msg" => "tidak dapat termuat"], 404);
         }
 
         $request->validate([

@@ -19,7 +19,7 @@ class prestasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "prestasi_juara" => "required|max:255",
+            "prestasi_juara" => "required|integer",
             "prestasi_namasiswa" => "required|max:255",
             "prestasi_deskripsi" => "required|max:255"
         ]);
@@ -34,8 +34,17 @@ class prestasiController extends Controller
         return response()->json($data);
     }
 
-    public function update(){
+    public function update($prestasi_id, Request $request){
+        $prestasi = prestasi::find($prestasi_id);
+        if (!$prestasi) {
+            return response()->json(["msg" => "Tidak ada data"], 404);
+        }
+        $prestasi->update($request->all());
 
+        return response()->json([
+            "msg" => "Data berhasil di update",
+            "data" => $prestasi
+        ]);
     }
 
     public function destroy(){
