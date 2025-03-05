@@ -28,8 +28,8 @@ class PpdbController extends Controller
         $request->validate ([
             "ppdb_deskripsi1" => "required|max:255",            
             "ppdb_deskripsi2" => "required|max:255",
-            "ppdb_notelp_1" => "required|max:255",
-            "ppdb_notelp_2" => "required|max:255",
+            "ppdb_notelp_1" => "required|max:15",
+            "ppdb_notelp_2" => "required|max:15",
             "ppdb_namaguru_1"	=> "required|max:255",
             "ppdb_namaguru_2"	=> "required|max:255"
             // "ppdb_url_gambar" => "required | max:255"
@@ -79,8 +79,8 @@ class PpdbController extends Controller
         $request->validate([
             "ppdb_deskripsi1" => "required|max:255",            
             "ppdb_deskripsi2" => "required|max:255",
-            "ppdb_notelp_1" => "required|max:255",
-            "ppdb_notelp_2" => "required|max:255",
+            "ppdb_notelp_1" => "required|max:15",
+            "ppdb_notelp_2" => "required|max:15",
             "ppdb_namaguru_1"	=> "required|max:255",
             "ppdb_namaguru_2"	=> "required|max:255"
         ]);

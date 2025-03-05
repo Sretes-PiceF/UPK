@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use function Pest\Laravel\delete;
+
 class prestasi extends Model
 {
     protected $table = 'prestasi';
@@ -19,4 +21,21 @@ class prestasi extends Model
         'prestasi_deskripsi',
         'prestasi_url_gambar'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saved(function () {
+            self::updateProfileCounts();
+        });
+
+        static::deleted(function(){
+            self::updateProfileCounts();
+        });
+    }
+
+    private static function updateProfileCounts() {
+        $jumlahDataPrestasi = self::count();
+        profile::query()->update(['jumlah_prestasi' => $jumlahDataPrestasi]);
+    }
 }

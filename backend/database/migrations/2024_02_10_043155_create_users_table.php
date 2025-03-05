@@ -18,23 +18,9 @@ return new class extends Migration
             $table->string('user_email', 225)->nullable(false);
             $table->string('user_username', 225)->nullable(false);
             $table->string('user_password', 225)->nullable(false);
-            $table->char('user_notelp', 16)->nullable(false);
-            $table->enum('user_level', ['admin'])->nullable(false);
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->char('user_notelp', 16)->nullable( false);
+            $table->enum('user_level', ['admin'])->default('admin')->nullable(false);
+            $table->timestamps();
         });
     }
 
