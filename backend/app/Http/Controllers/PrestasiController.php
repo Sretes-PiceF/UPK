@@ -47,6 +47,18 @@ class prestasiController extends Controller
         ]);
     }
 
+
+    public function show($prestasi) {
+        $prestasi = prestasi::where('prestasi_id', $prestasi)->first();
+
+        if(!$prestasi){
+            return response()->json(["massage" => "data invicible", 404]);
+        }
+
+        return response()->json($prestasi);
+    }
+
+    
     public function destroy(){
 
     }
