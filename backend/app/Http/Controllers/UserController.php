@@ -20,7 +20,7 @@ class UserController extends Controller
             "data" => $data
         ]);
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -29,18 +29,18 @@ class UserController extends Controller
     {
         $request->validate([
             "user_nama" => "required|max:255",
-            "user_email" => "required|max:255|unique:users,user_email", // Tambahkan validasi unique untuk email
+            "user_email" => "email|required|max:255|unique:users,user_email", // Tambahkan validasi unique untuk email
             "user_username" => "required|max:255|unique:users,user_username", // Tambahkan validasi unique untuk username
             "user_password" => "required|max:255",
             "user_notelp" => "required|max:16"
         ]);
-    
+
         // Generate unique user_id
         $user_id = uniqid();
-    
+
         // Hash password sebelum disimpan ke database
         $hashedPassword = bcrypt($request->user_password);
-    
+
         // Buat user dengan level default 'admin'
         $data = user::create([
             'user_id' => $user_id,
@@ -51,7 +51,7 @@ class UserController extends Controller
             'user_notelp' => $request->user_notelp,
             'user_level' => 'admin' // Set level default sebagai 'admin'
         ]);
-    
+
         return response()->json([
             "msg" => "User berhasil dibuat",
             "data" => $data
@@ -61,15 +61,12 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(user $user)
-    {
-        
-    }
+    public function show(user $user) {}
 
     /**
      * Update the specified resource in storage.
      */
-    public function update( $request, user $user)
+    public function update($request, user $user)
     {
         //
     }

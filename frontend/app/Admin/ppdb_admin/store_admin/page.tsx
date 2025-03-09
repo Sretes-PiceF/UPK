@@ -1,9 +1,9 @@
-import Sidebar from "@/app/components/Sidebar"
+import Sidebar from "@/components/Sidebar"
 
 const Buat = () => {
-    return(
+    return (
         <>
-        <div className="flex h-screen bg-gray-100">
+            <div className="flex h-screen bg-gray-100">
                 <Sidebar />
                 <main className="w-4/5 p-8 bg-white rounded-lg shadow-lg m-4">
                     <h1 className="text-2xl font-bold">PPDB</h1>
@@ -26,7 +26,7 @@ const Buat = () => {
                             <input type="tel" className="w-full p-2 border border-gray-300 rounded" />
                         </div>
                     </div>
-        
+
                     <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700">Buat</button>
                     <p className="mt-4 text-green-600 font-medium"></p>
                 </main>

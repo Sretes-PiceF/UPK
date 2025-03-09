@@ -1,13 +1,4 @@
-import Login from "../components/Login"
+import Login from "@/pages/Login/Login";
+import { memo } from "react";
 
-const LoginPage = () => {
-    return (
-        <>
-        <div>
-            <Login />
-        </div>
-        </>
-    )
-}
-
-export default LoginPage
+export default memo(Login)
