@@ -1,4 +1,4 @@
-import Sidebar from "@/app/components/Sidebar"
+import Sidebar from "@/components/Sidebar"
 
 const Page = () => {
     return (
@@ -26,7 +26,7 @@ const Page = () => {
                             <input type="text" className="w-full p-2 border border-gray-300 rounded" />
                         </div>
                     </div>
-                    <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700">Update PPDB</button>
+                    <button className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700">Update</button>
                     <p id="status" className="mt-4 text-green-600 font-medium"></p>
                 </main>
             </div>

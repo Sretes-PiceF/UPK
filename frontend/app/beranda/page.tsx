@@ -1,7 +1,7 @@
 import React from 'react'
-import Footer from '../components/Footer'
+import Footer from '../../components/Footer'
 import Image from 'next/image'
-import Header from '../components/Header'
+import Header from '@/components/Header'
 
 export default function Beranda() {
   return (
@@ -24,8 +24,8 @@ export default function Beranda() {
             </p>
           </div>
           <div className="w-[190px] h-[250px] mt-6 md:mt-0 flex-shrink-0">
-  <img src="/images/UPK/Foto  kepala sekolah.jpg" className="w-full h-full rounded-lg object-cover shadow-md" alt="Kepala Sekolah"  />
-</div>
+            <img src="/images/UPK/Foto  kepala sekolah.jpg" className="w-full h-full rounded-lg object-cover shadow-md" alt="Kepala Sekolah" />
+          </div>
         </div>
       </main>
 

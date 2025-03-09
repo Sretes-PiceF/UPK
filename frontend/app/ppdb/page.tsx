@@ -1,6 +1,6 @@
 import React from "react";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 const Page = () => {
     return (
@@ -37,7 +37,7 @@ const Page = () => {
                 <div className="w-[200px] bg-gray-200 p-10">
                     <p className="text-center">Konten Samping Kanan</p>
                 </div>
-                </div>
+            </div>
 
             {/* Container untuk No Telpon dan Google Maps */}
             <div className="relative w-full h-[350px] mt-[100px] drop-shadow-2xl">

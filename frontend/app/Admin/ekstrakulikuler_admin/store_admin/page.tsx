@@ -1,11 +1,11 @@
-import Sidebar from "@/app/components/Sidebar"
+import Sidebar from "@/components/Sidebar"
 
 const Buat = () => {
-    return(
+    return (
         <>
-        <div className="flex h-screen bg-gray-100">
-                    <Sidebar />
-                    <main className="w-4/5 p-8 bg-white rounded-lg shadow-lg m-4">
+            <div className="flex h-screen bg-gray-100">
+                <Sidebar />
+                <main className="w-4/5 p-8 bg-white rounded-lg shadow-lg m-4">
                     <h1 className="text-2xl font-bold">EKSTRAKULIKULER</h1>
                     <p className="text-gray-600">Halaman Buat Data Ekstrakulikuler</p>
                     <div className="card p-4 bg-gray-50 rounded-lg shadow">
