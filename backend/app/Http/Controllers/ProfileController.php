@@ -38,11 +38,10 @@ class ProfileController extends Controller
         $jumlahDataEkstrakulikuler = ekstrakulikuler::count();
 
         // Buat ID unik untuk profile
-        $profile = uniqid();
+        // $profile = uniqid();
 
         // Simpan data ke tabel profile
         $data = Profile::create([
-            'profile_id' => $profile,
             'profile_guru' => $request->profile_guru,
             'profile_siswa' => $request->profile_siswa,
             'jumlah_prestasi' => $jumlahDataPrestasi, // Simpan jumlah prestasi
@@ -58,9 +57,9 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($profile)
+    public function show($profile_id)
     {
-        $profile = profile::where('profile_id', $profile)->first();
+        $profile = profile::find($profile_id);
 
         if (!$profile) {
             return response()->json(["massage" => "data invicible"], 404);

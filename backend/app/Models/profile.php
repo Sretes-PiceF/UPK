@@ -10,14 +10,14 @@ class profile extends Model
     /** @use HasFactory<\Database\Factories\ProfileFactory> */
     use HasFactory;
     protected $table = "profile";
-    protected $primaryKey = "profile_id";
-    
+    protected $primaryKey = "id";
+
 
     protected $keyType = "string";
     public $timestamps = false;
 
     protected $fillable = [
-        'profile_id',
+        'id',
         'profile_guru',
         'profile_siswa',
         'jumlah_prestasi',
