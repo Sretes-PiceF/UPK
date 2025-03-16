@@ -14,6 +14,7 @@ Route::apiResource("/profile", ProfileController::class);
 Route::apiResource("/ppdb", PpdbController::class);
 Route::apiResource("/ekstrakulikuler", EkstrakulikulerController::class);
 Route::apiResource("/prestasi", ControllersPrestasiController::class);
+// Route::post('/prestasi/update/{id}', [ControllersPrestasiController::class, 'update']);
 Route::apiResource('viewUser', UserController::class);
 Route::apiResource('/register', UserController::class);
 

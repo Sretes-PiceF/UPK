@@ -1,10 +1,54 @@
+'use client'
+
 import Link from "next/link"
 import { Pencil } from "lucide-react"
 import { Trash } from "lucide-react"
 import Sidebar from "@/components/Sidebar"
 import ProtectedRoute from "@/components/ProtectedRoute"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 const HalPertama = () => {
+    const [prestasiData, setPrestasiData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const router = useRouter();
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const result = await axios("http://localhost:8000/api/prestasi");
+            if (result.data && Array.isArray(result.data.data)) {
+                setPrestasiData(result.data.data);
+            } else {
+                console.error("Data tidak ada", result.data);
+            }
+        } catch (error) {
+            console.error("Data eror di dapat", error);
+        } finally {
+            setLoading(false);
+        }
+    }
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
+    const deletePrestasi = async (prestasi_id) => {
+        try {
+            await axios.delete(`http://localhost:8000/api/prestasi/${prestasi_id}`);
+            alert("Sukses menghapus");
+
+            // Perbarui state tanpa perlu fetch ulang data
+            setPrestasiData((prevData) => prevData.filter(item => item.prestasi_id !== prestasi_id));
+        } catch (error) {
+            console.error("Gagal menghapus data", error);
+            alert("Gagal menghapus data!");
+        }
+    };
+
     return (
         <>
             <ProtectedRoute>
@@ -31,27 +75,27 @@ const HalPertama = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td className="px-4 py-2 border">1</td>
-                                        <td className="px-4 py-2 border">Juara 1</td>
-                                        <td className="px-4 py-2 border">Mohammad Zulkipli</td>
-                                        <td className="px-4 py-2 border">Dia pemenang efootball-priode 2024 u-12</td>
-                                        <td className="px-4 py-2 border">Files.jpg</td>
-                                        <td className="px-4 py-2 border">
-                                            <div className="flex space-x-2">
-                                                <Link href="/Admin/prestasi_admin/update_admin">
-                                                    <button className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
-                                                        <Pencil />
-                                                    </button>
-                                                </Link>
-                                                <Link href="/buku/edit/1">
-                                                    <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
+                                    {prestasiData.map((rs, index) => (
+                                        <tr key={rs.prestasi_id || index}>
+                                            <td className="px-4 py-2 border">{index + 1}</td>
+                                            <td className="px-4 py-2 border">{rs.prestasi_juara}</td>
+                                            <td className="px-4 py-2 border">{rs.prestasi_namasiswa}</td>
+                                            <td className="px-4 py-2 border">{rs.prestasi_deskripsi}</td>
+                                            <td className="px-4 py-2 border">{rs.prestasi_url_gambar}</td>
+                                            <td className="px-4 py-2 border">
+                                                <div className="flex space-x-2">
+                                                    <Link href={`/Admin/prestasi_admin/update_admin/${rs.prestasi_id}`}>
+                                                        <button className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700">
+                                                            <Pencil />
+                                                        </button>
+                                                    </Link>
+                                                    <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700" onClick={() => deletePrestasi(rs.prestasi_id)}>
                                                         <Trash />
                                                     </button>
-                                                </Link>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

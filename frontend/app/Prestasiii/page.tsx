@@ -16,16 +16,16 @@ const Profile = () => {
 
                         {/* <!-- Item Prestasi --> */}
                         <div className="bg-white p-4 rounded-lg shadow-md w-64 drop-shadow-2xl">
-                            <img src="/images/juara/IMG-20250128-WA0006.jpg" alt="Zara Izzatul Aulia" className="w-[500px] h-[335px] rounded-lg" />
+                            <img src="/images/juara/IMG-20250128-WA0006.jpg" alt="Moch. Lukhman Hakim Zulkarnain" className="w-[500px] h-[335px] rounded-lg" />
                             <p className="mt-2">Juara : 1</p>
-                            <span className="font-bold block my-2">Zara Izzatul Aulia</span>
+                            <span className="font-bold block my-2">Moch. Lukhman Hakim Zulkarnain</span>
                             <p>Juara Lomba Tari Tradisional tingkat Jawa Timur 2024</p>
                         </div>
 
                         <div className="bg-white p-4 rounded-lg shadow-md w-64 drop-shadow-2xl">
-                            <img src="/images/juara/IMG-20250128-WA0007.jpg" alt="Lukhman Hakim" className="w-[500px] h-[335px] rounded-lg" />
+                            <img src="/images/juara/IMG-20250128-WA0007.jpg" alt="Zara Izzatul Aulia" className="w-[500px] h-[335px] rounded-lg" />
                             <p className="mt-2">Juara : 2</p>
-                            <span className="font-bold block my-2">Moch. Lukhman Hakim Zulkarnain</span>
+                            <span className="font-bold block my-2">Zara Izzatul Aulia</span>
                             <p>Juara Olimpiade IPA tingkat Nasional 2024</p>
                         </div>
 

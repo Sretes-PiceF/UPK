@@ -23,11 +23,6 @@ const Futsal = () => {
                   Di lapangan futsal kita bertahan untuk mencetak gol, di sekolah kita belajar untuk
                   mengatasi tantangan, beradaptasi, dan meraih impian.
                 </p>
-                <hr className="my-4 border-gray-400" />
-                <p className="text-sm font-semibold text-gray-700 text-center md:text-left">
-                  Ingat, dalam kehidupan kegagalan bukanlah akhir, melainkan kunci menuju kesuksesan.
-                  Salam dari kami SMP PGRI 6 Malang.
-                </p>
               </div>
             </div>
           </section>
