@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\delete;
 
 class prestasi extends Model
@@ -25,16 +26,24 @@ class prestasi extends Model
     protected static function boot()
     {
         parent::boot();
+
+
+        static::deleting(function ($prestasi) {
+            if ($prestasi->prestasi_url_gambar && Storage::exists($prestasi->prestasi_url_gambar)) {
+                Storage::delete($prestasi->prestasi_url_gambar);
+            }
+        });
         static::saved(function () {
             self::updateProfileCounts();
         });
 
-        static::deleted(function(){
+        static::deleted(function () {
             self::updateProfileCounts();
         });
     }
 
-    private static function updateProfileCounts() {
+    private static function updateProfileCounts()
+    {
         $jumlahDataPrestasi = self::count();
         profile::query()->update(['jumlah_prestasi' => $jumlahDataPrestasi]);
     }

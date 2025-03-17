@@ -1,7 +1,31 @@
+'use client'
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
+  const [profileData, setProfileData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await axios('http://localhost:8000/api/profile');
+
+      if (result.data && Array.isArray(result.data.data)) {
+        setProfileData(result.data.data);
+      } else {
+        console.error("data format is invalid:", result.data);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   return (
     <>
       <Header />
@@ -60,26 +84,39 @@ const Profile = () => {
           </div>
         </div>
       </section>
+
+
       {/*        
       <!-- Statistik Sekolah --> */}
       <section className="container mx-auto my-8 bg-teal-700 text-white p-6 rounded-lg flex justify-around text-center">
-        <div>
-          <i className="fas fa-chalkboard-teacher text-4xl"></i>
-          <p className="text-2xl font-bold">20</p>
-        </div>
-        <div>
-          <i className="fas fa-user-graduate text-4xl"></i>
-          <p className="text-2xl font-bold">210</p>
-        </div>
-        <div>
-          <i className="fas fa-trophy text-4xl "></i>
-          <p className="text-2xl font-bold">7</p>
-        </div>
-        <div>
-          <i className="fas fa-ring text-4xl"></i>
-          <p className="text-2xl font-bold">6</p>
-        </div>
+        {profileData.map((rs, index) => (
+          <div key={rs.id || index}>
+            <i className="fas fa-chalkboard-teacher text-4xl"></i>
+            <p className="text-2xl font-bold">{rs.profile_guru}</p>
+          </div>
+        ))}
+        {profileData.map((rs, index) => (
+          <div key={rs.id || index}>
+            <i className="fas fa-user-graduate text-4xl"></i>
+            <p className="text-2xl font-bold">{rs.profile_siswa}</p>
+          </div>
+        ))}
+        {profileData.map((rs, index) => (
+          <div key={rs.id || index}>
+            <i className="fas fa-trophy text-4xl"></i>
+            <p className="text-2xl font-bold">{rs.jumlah_prestasi}</p>
+          </div>
+        ))}
+        {profileData.map((rs, index) => (
+          <div key={rs.id || index}>
+            <i className="fas fa-ring text-4xl"></i>
+            <p className="text-2xl font-bold">{rs.jumlah_ekstrakulikuler}</p>
+          </div>
+        ))}
       </section>
+
+
+
 
       <section className="container mx-auto my-8 bg-white p-6 rounded-lg shadow-lg">
         <h3 className="text-xl font-semibold mb-4">Bagian bawah profil</h3>

@@ -1,33 +1,71 @@
 'use client';
 import Link from 'next/link';
-import { useState, useRef, useEffect } from 'react'; // Tambahkan useRef dan useEffect
+import { useState, useRef, useEffect } from 'react';
 import styles from './header.module.css';
+import axios from 'axios';
 
 const Header = () => {
+  const [prestasiData, setPrestasiData] = useState([]);
+  const [ekstrakulikulerData, setEkstrakulikulerData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEkstraOpen, setIsEkstraOpen] = useState(false);
 
-  // Ref untuk dropdown Profile dan Ekstrakulikuler
-  const profileRef = useRef<HTMLDivElement>(null);
-  const ekstraRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef(null);
+  const ekstraRef = useRef(null);
 
-  // Fungsi untuk menutup dropdown ketika klik di luar
-  const handleClickOutside = (event: MouseEvent) => {
-    if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+  useEffect(() => {
+    fetchData();
+    fetchEkstrakulikulerData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const result = await axios("http://localhost:8000/api/prestasi");
+      if (result.data && Array.isArray(result.data.data)) {
+        setPrestasiData(result.data.data);
+      } else {
+        console.error("Data tidak ada", result.data);
+      }
+    } catch (error) {
+      console.error("Data error", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchEkstrakulikulerData = async () => {
+    try {
+      const result = await axios("http://localhost:8000/api/ekstrakulikuler");
+      if (result.data && Array.isArray(result.data.data)) {
+        setEkstrakulikulerData(result.data.data);
+      } else {
+        console.error("Data ekstrakulikuler tidak ada", result.data);
+      }
+    } catch (error) {
+      console.error("Data ekstrakulikuler error", error);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (profileRef.current && !profileRef.current.contains(event.target)) {
       setIsProfileOpen(false);
     }
-    if (ekstraRef.current && !ekstraRef.current.contains(event.target as Node)) {
+    if (ekstraRef.current && !ekstraRef.current.contains(event.target)) {
       setIsEkstraOpen(false);
     }
   };
 
-  // Tambahkan event listener untuk mendeteksi klik di luar
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <header className="bg-teal-700 text-white py-0 px-6 flex items-center justify-between">
@@ -81,24 +119,11 @@ const Header = () => {
             </button>
             {isEkstraOpen && (
               <div ref={ekstraRef} className={`${styles.dropdown} ${styles.dropdownAnimation}`}>
-                <Link href="/ekstrakulikuler/futsal" className={styles.dropdownItem}>
-                Futsal
-                </Link>
-                <Link href="/ekstrakulikuler/marching_band" className={styles.dropdownItem}>
-                  Marching Band
-                </Link>
-                <Link href="/ekstrakulikuler/banjari" className={styles.dropdownItem}>
-                  Banjari
-                </Link>
-                <Link href="/ekstrakulikuler/tari" className={styles.dropdownItem}>
-                  Tari
-                </Link>
-                <Link href="/ekstrakulikuler/paskibra" className={styles.dropdownItem}>
-                  Paskibra
-                </Link>
-                <Link href="/ekstrakulikuler/pramuka" className={styles.dropdownItem}>
-                  Pramuka
-                </Link>
+                {ekstrakulikulerData.map((rs, index) => (
+                  <Link href={`/ekstrakulikuler/${rs.ekstrakulikuler_id}`} className={styles.dropdownItem} key={rs.ekstrakulikuler_id || index}>
+                    {rs.ekstrakulikuler_judul}
+                  </Link>
+                ))}
               </div>
             )}
           </li>
