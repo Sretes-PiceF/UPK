@@ -25,9 +25,9 @@ class prestasiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "prestasi_juara" => "required|integer",
+            "prestasi_juara" => "required|max:255",
             "prestasi_namasiswa" => "required|max:255",
-            "prestasi_deskripsi" => "required|max:255",
+            "prestasi_deskripsi" => "required|max:3000",
             "prestasi_url_gambar" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:10000"
         ]);
 
@@ -60,9 +60,9 @@ class prestasiController extends Controller
             }
 
             $request->validate([
-                "prestasi_juara" => "required|integer",
+                "prestasi_juara" => "required|max:255",
                 "prestasi_namasiswa" => "required|max:255",
-                "prestasi_deskripsi" => "required|max:255",
+                "prestasi_deskripsi" => "required|max:3000",
                 "prestasi_url_gambar" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10000"
             ]);
 

@@ -54,7 +54,7 @@ const Buat = () => {
                         <div className="input-container mb-4">
                             <label className="block text-gray-700">Input judul juara</label>
                             <input
-                                type="number"
+                                type="text"
                                 name="prestasi_juara"
                                 id="prestasi_juara"
                                 className="w-full p-2 border border-gray-300 rounded"

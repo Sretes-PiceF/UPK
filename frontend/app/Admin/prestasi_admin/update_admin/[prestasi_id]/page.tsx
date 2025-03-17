@@ -16,6 +16,8 @@ const Page = () => {
         prestasi_url_gambar: ''
     });
     const [fileImage, setFileImage] = useState(null);
+    const [isLoading, setIsLoading] = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (prestasi_id) {
@@ -26,7 +28,12 @@ const Page = () => {
     const fetchPrestasi = async () => {
         try {
             const result = await axios.get(`http://localhost:8000/api/prestasi/${prestasi_id}`);
-            setInputs(result.data);
+            setInputs({
+                prestasi_juara: result.data.prestasi_juara || '',
+                prestasi_namasiswa: result.data.prestasi_namasiswa || '',
+                prestasi_deskripsi: result.data.prestasi_deskripsi || '',
+                prestasi_url_gambar: result.data.prestasi_url_gambar || ''
+            });
         } catch (error) {
             console.error('Error fetching prestasi:', error);
         }
@@ -61,6 +68,9 @@ const Page = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+
         const isSuccess = await uploadPrestasi();
         if (isSuccess) {
             alert('Data berhasil diupdate!');
@@ -68,6 +78,8 @@ const Page = () => {
         } else {
             alert('Gagal mengupdate data!');
         }
+
+        setIsLoading(false)
     };
 
     return (
@@ -103,8 +115,9 @@ const Page = () => {
 
                             <label className="block text-gray-700 mb-2">Judul Juara</label>
                             <input
-                                type="number"
+                                type="text"
                                 name="prestasi_juara"
+                                id='prestasi_juara'
                                 value={inputs.prestasi_juara}
                                 onChange={handleInputChange}
                                 className="w-full p-2 border rounded mb-4"
@@ -114,6 +127,7 @@ const Page = () => {
                             <input
                                 type="text"
                                 name="prestasi_namasiswa"
+                                id='prestasi_namasiswa'
                                 value={inputs.prestasi_namasiswa}
                                 onChange={handleInputChange}
                                 className="w-full p-2 border rounded mb-4"
@@ -122,6 +136,7 @@ const Page = () => {
                             <label className="block text-gray-700 mb-2">Deskripsi</label>
                             <textarea
                                 name="prestasi_deskripsi"
+                                id='prestasi_deskripsi'
                                 value={inputs.prestasi_deskripsi}
                                 onChange={handleInputChange}
                                 className="w-full p-2 border rounded mb-4"

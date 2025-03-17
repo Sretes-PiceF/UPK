@@ -6,6 +6,10 @@ use App\Models\ekstrakulikuler;
 use App\Http\Requests\StoreekstrakulikulerRequest;
 use App\Http\Requests\UpdateekstrakulikulerRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\TryCatch;
 
 class EkstrakulikulerController extends Controller
 {
@@ -23,26 +27,30 @@ class EkstrakulikulerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "*.ekstrakulikuler_judul" => "required|max:255",
-            "*.ekstrakulikuler_deskripsi" => "required|max:5000",
+            "ekstrakulikuler_judul" => "required|max:255",
+            "ekstrakulikuler_deskripsi" => "required|max:5000",
+            "ekstrakulikuler_url_gambar" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:10000",
         ]);
 
-        $data = request()->all();
-        $saveData = [];
+        if ($request->hasFile('ekstrakulikuler_url_gambar')) {
+            $image = $request->file('ekstrakulikuler_url_gambar');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('storage/images/ekstrakulikuler'), $imageName);
+        }
 
-        foreach ($data as $item) {
-
-        $saveData [] = ekstrakulikuler::create([
-            'ekstrakulikuler_id' => uniqid(),
-            'ekstrakulikuler_judul' => $item['ekstrakulikuler_judul'],
-            'ekstrakulikuler_deskripsi' => $item['ekstrakulikuler_deskripsi']
+        $ekstrakulikuler_id = uniqid();
+        $saveData = ekstrakulikuler::create([
+            'ekstrakulikuler_id' => $ekstrakulikuler_id,
+            'ekstrakulikuler_judul' => $request->ekstrakulikuler_judul,
+            'ekstrakulikuler_deskripsi' => $request->ekstrakulikuler_deskripsi,
+            'ekstrakulikuler_url_gambar' => $imageName
         ]);
-    }
+
         return response()->json($saveData);
     }
 
 
-    public function show(ekstrakulikuler $ekstrakulikuler)
+    public function show($ekstrakulikuler)
     {
         $ekstrakulikuler = ekstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler)->first();
 
@@ -56,23 +64,45 @@ class EkstrakulikulerController extends Controller
 
     public function update($ekstrakulikuler_id, Request $request)
     {
-        $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
-        if(!$ekstrakulikuler) {
-            return response()->json(["msg" => "tidak dapat termuat"], 404);
+        try {
+            $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
+            if (!$ekstrakulikuler) {
+                return response()->json(["msg" => "Tidak ada ekstrakulikuler"], 400);
+            }
+
+            $request->validate([
+                "ekstrakulikuler_judul" => "required|max:255",
+                "ekstrakulikuler_deskripsi" => "required|max:5000",
+                "ekstrakulikuler_url_gambar" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10000"
+            ]);
+
+            $ekstrakulikuler->ekstrakulikuler_judul = $request->ekstrakulikuler_judul;
+            $ekstrakulikuler->ekstrakulikuler_deskripsi = $request->ekstrakulikuler_deskripsi;
+
+            if ($request->hasFile('ekstrakulikuler_url_gambar')) {
+                $storage = Storage::disk('public');
+
+                $imageName = Str::random(32) . "." . $request->ekstrakulikuler_url_gambar->getClientOriginalExtension();
+                $request->ekstrakulikuler_url_gambar->storeAs('images/ekstrakulikuler', $imageName, 'public');
+
+                if ($ekstrakulikuler->ekstrakulikuler_url_gambar && $storage->exists('images/ekstrakulikuler/' . $ekstrakulikuler->ekstrakulikuler_url_gambar)) {
+                    $storage->delete('images/ekstrakulikuler/' . $ekstrakulikuler->ekstrakulikuler_url_gambar);
+                }
+
+                $ekstrakulikuler->ekstrakulikuler_url_gambar = $imageName;
+            }
+
+            $ekstrakulikuler->save();
+
+            return response()->json([
+                'msg' => "Data berhasil diperbarui",
+                'data' => $ekstrakulikuler
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(["msg" => "Terjadi kesalahan", "error" => $e->getMessage()], 500);
         }
-
-        $request->validate([
-            "ekstrakulikuler_judul" => "required|max:255",
-            "ekstrakulikuler_deskripsi" => "required|max:255",
-        ]);
-
-        $ekstrakulikuler->update($request->all());
-
-        return response()->json([
-            "msg" => "sukses",
-            "data" => $ekstrakulikuler
-        ]);
     }
+
 
 
     public function destroy($ekstrakulikuler_id)
@@ -80,14 +110,22 @@ class EkstrakulikulerController extends Controller
         $ekstrakulikuler = ekstrakulikuler::find($ekstrakulikuler_id);
 
         if (!$ekstrakulikuler) {
-            return response()->json(["msg" => "tidak ketemu"], 404);
+            return response()->json(["Data yang kamu pilih tidak ditemukan"], 404);
+        }
+
+        // Hapus gambar jika ada
+        if ($ekstrakulikuler->ekstrakulikuler_url_gambar) {
+            $imagePath = public_path('storage/images/ekstrakulikuler/' . $ekstrakulikuler->ekstrakulikuler_url_gambar);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath); // Hapus file gambar
+            }
         }
 
         $ekstrakulikuler->delete();
 
         return response()->json([
-            "msg" => "berhasil ke delete kawan",
-            "data" => $ekstrakulikuler
+            'msg' => "Data succes di hapus",
+            'data' => $ekstrakulikuler
         ]);
     }
 }
