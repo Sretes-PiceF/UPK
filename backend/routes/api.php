@@ -18,6 +18,7 @@ Route::apiResource("/prestasi", ControllersPrestasiController::class);
 Route::apiResource('viewUser', UserController::class);
 Route::apiResource('/register', UserController::class);
 
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
     Route::post('logout', [AuthController::class, 'logout']);

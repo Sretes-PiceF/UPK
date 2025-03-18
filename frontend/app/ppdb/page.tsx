@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import { Phone } from "lucide-react";
 
 const Page = () => {
     return (
@@ -12,8 +13,6 @@ const Page = () => {
                 <div className="w-[200px] bg-gray-200 p-10">
                     <p className="text-center">Konten Samping Kiri</p>
                 </div>
-
-
 
                 {/* Container Gambar Tengah */}
                 <div className="flex flex-col md:flex-row w-full md:w-1/2 gap-4 justify-center">
@@ -46,9 +45,21 @@ const Page = () => {
                     <div className="text-center mb-4">
                         <h1 className="text-sm font-semibold text-white">Info PPDB Jangan lupa untuk Join:</h1>
                     </div>
-                    <div className="flex flex-col gap-2">
-                        <a href="https://wa.me/6281216146759/" className="text-sm font-semibold text-white">081216146759 | Bu Dia</a>
-                        <a href="https://wa.me/6281230662365/" className="text-sm font-semibold text-white">081230662365 | Bu Indah</a>
+                    <div className="flex flex-col gap-2 ml-7">
+                        <a
+                            href="https://wa.me/6281216146759/"
+                            className="text-sm font-semibold text-white flex items-center gap-2"
+                        >
+                            <Phone className="text-green-500" /> {/* Ikon dengan warna hijau */}
+                            081216146759 | Bu Dia
+                        </a>
+                        <a
+                            href="https://wa.me/6281230662365/"
+                            className="text-sm font-semibold text-white flex items-center gap-2"
+                        >
+                            <Phone className="text-green-500" /> {/* Ikon dengan warna hijau */}
+                            081230662365 | Bu Indah
+                        </a>
                     </div>
                 </div>
 
