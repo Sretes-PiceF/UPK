@@ -55,10 +55,6 @@ const HalPertama = () => {
         );
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
     const deletePpdb = async (ppdb_id) => {
         try {
             await axios.delete(`http://localhost:8000/api/ppdb/${ppdb_id}`);
@@ -70,10 +66,25 @@ const HalPertama = () => {
         }
     };
 
+    const deleteGambar = async (ppdb_id) => {
+        try {
+            await axios.delete(`http://localhost:8000/api/ppdb/${ppdb_id}`);
+            alert("Sukses menghapus gambar");
+            setGambarData((prevData) => prevData.filter(item => item.ppdb_id !== ppdb_id));
+        } catch (error) {
+            console.error("Gagal menghapus gambar", error);
+            alert("Gagal menghapus gambar!");
+        }
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
             <ProtectedRoute>
-                <div className="flex h-screen bg-gray-100">
+                <div className="flex min-h-screen bg-gray-100">
                     <Sidebar />
                     <main className="w-4/5 p-8 bg-white rounded-lg shadow-lg m-4">
                         <h1 className="text-2xl font-bold">PPDB</h1>
@@ -148,7 +159,7 @@ const HalPertama = () => {
                                                     <Pencil />
                                                 </button>
                                             </Link>
-                                            <button onClick={() => deletePpdb(gambar.ppdb_id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                                            <button onClick={() => deleteGambar(gambar.ppdb_id)} className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-700">
                                                 <Trash />
                                             </button>
                                         </div>

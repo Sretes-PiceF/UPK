@@ -108,44 +108,6 @@ class prestasiController extends Controller
             ], 500);
         }
     }
-    // if (!$request->isMethod('PUT') && !$request->isMethod('POST')) {
-    //     return response()->json([
-    //         "msg" => 'method error bro'
-    //     ], 404);
-    // }
-
-    // $prestasi = prestasi::find($prestasi_id);
-
-    // if (!$prestasi) {
-    //     return response()->json(["msg" => "tidak dapat termuat"], 404);
-    // }
-
-    // $validatedData = $request->validate([
-    //     "prestasi_juara" => "required|integer",
-    //     "prestasi_namasiswa" => "required|max:255",
-    //     "prestasi_deskripsi" => "required|max:255",
-    //     "prestasi_url_gambar" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10000"
-    // ]);
-
-
-    // if ($request->hasFile('prestasi_url_gambar')) {
-    //     // Hapus gambar lama jika ada
-    //     if ($prestasi->prestasi_url_gambar && Storage::exists($prestasi->prestasi_url_gambar)) {
-    //         Storage::delete($prestasi->prestasi_url_gambar);
-    //     }
-
-    //     // Simpan gambar baru
-    //     $path = $request->file('prestasi_url_gambar')->store('prestasi', 'public');
-    //     $validatedData['prestasi_url_gambar'] = $path;
-    // }
-
-    // // Update data prestasi
-    // $prestasi->update($validatedData);
-
-    // return response()->json([
-    //     "msg" => "sukses",
-    //     "data" => $prestasi
-    // ]);
 
 
     public function show($prestasi)

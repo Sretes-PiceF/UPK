@@ -40,7 +40,7 @@ const Page = () => {
             {/* Container Utama */}
             <div className="flex flex-col md:flex-row m-[50px] gap-6 ml-[100px] relative">
                 {/* Sisi Kiri - Deskripsi */}
-                <div className="w-[175px] h-[500px] bg-gray-200 p-10 absolute left-0 top-1/2 transform -translate-y-1/2">
+                <div className="w-[175px] h-[300px] bg-gray-200 p-10 absolute left-0 top-1/2 transform -translate-y-1/2">
                     <p className="text-center">{ppdbData[0]?.ppdb_deskripsi1}</p>
                 </div>
 
@@ -58,7 +58,7 @@ const Page = () => {
                 </div>
 
                 {/* Sisi Kanan - Deskripsi */}
-                <div className="w-[175px] h-[500px] bg-gray-200 p-10 absolute right-0 top-1/2 transform -translate-y-1/2">
+                <div className="w-[175px] h-[300px] bg-gray-200 p-10 absolute right-0 top-1/2 transform -translate-y-1/2">
                     <p className="text-center">{ppdbData[0]?.ppdb_deskripsi2}</p>
                 </div>
             </div>
