@@ -20,7 +20,6 @@ class AuthController extends Controller
             'user_password' => 'required|string',
         ]);
 
-
         $user = User::where("user_username", $request->user_username)->first();
         if (!$user) {
             return response([
@@ -35,9 +34,11 @@ class AuthController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('token')->plainTextToken;
+        // Buat token dengan masa berlaku 24 jam
+        $token = $user->createToken('token', ['*'], now()->addHours(24))->plainTextToken;
 
-        $cookie = cookie('jwt', $token);
+        // Buat session cookie (akan dihapus saat browser ditutup)
+        $cookie = cookie('jwt', $token, 0, null, null, false, true);
 
         return response()->json([
             'message' => $token,
@@ -51,7 +52,6 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-
         $user = $request->user(); // Ambil user yang sedang login
 
         if ($user) {
@@ -61,7 +61,7 @@ class AuthController extends Controller
         $cookie = Cookie::forget('jwt');
 
         return response()->json([
-            "msg" => "succes",
+            "msg" => "success",
         ])->withCookie($cookie);
     }
 }
