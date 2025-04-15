@@ -11,10 +11,26 @@ const Buat = () => {
     const [namasiswa, setNamaSiswa] = useState("");
     const [deskripsi, setDeskripsi] = useState("");
     const [gambar, setGambar] = useState(null);
+    const [errors, setErrors] = useState({});
     const router = useRouter();
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!juara.trim()) newErrors.juara = "Judul juara tidak boleh kosong";
+        if (!namasiswa.trim()) newErrors.namasiswa = "Nama siswa tidak boleh kosong";
+        if (!deskripsi.trim()) newErrors.deskripsi = "Deskripsi tidak boleh kosong";
+        if (!gambar) newErrors.gambar = "Gambar tidak boleh kosong";
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const onSubmitCreate = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
 
         try {
             const formData = new FormData()
@@ -52,6 +68,7 @@ const Buat = () => {
                                     className="w-full p-2 border border-gray-300 rounded"
                                     onChange={(e) => setGambar(e.target.files[0])}
                                 />
+                                {errors.gambar && <p className="text-red-500 text-sm mt-1">{errors.gambar}</p>}
                             </div>
                             <div className="input-container mb-4">
                                 <label className="block text-gray-700">Input judul juara</label>
@@ -62,6 +79,7 @@ const Buat = () => {
                                     className="w-full p-2 border border-gray-300 rounded"
                                     onChange={(e) => setJuara(e.target.value)}
                                 />
+                                {errors.juara && <p className="text-red-500 text-sm mt-1">{errors.juara}</p>}
                             </div>
                             <div className="input-container mb-4">
                                 <label className="block text-gray-700">Input nama siswa</label>
@@ -70,6 +88,7 @@ const Buat = () => {
                                     className="w-full p-2 border border-gray-300 rounded"
                                     onChange={(e) => setNamaSiswa(e.target.value)}
                                 />
+                                {errors.namasiswa && <p className="text-red-500 text-sm mt-1">{errors.namasiswa}</p>}
                             </div>
                             <div className="input-container mb-4">
                                 <label className="block text-gray-700">Input deskripsi</label>
@@ -78,6 +97,7 @@ const Buat = () => {
                                     className="w-full p-2 border border-gray-300 rounded"
                                     onChange={(e) => setDeskripsi(e.target.value)}
                                 />
+                                {errors.deskripsi && <p className="text-red-500 text-sm mt-1">{errors.deskripsi}</p>}
                             </div>
                             <button type="submit" className="mt-6 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-700">Buat</button>
                             <p id="status" className="mt-4 text-green-600 font-medium"></p>

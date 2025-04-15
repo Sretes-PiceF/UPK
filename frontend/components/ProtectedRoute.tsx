@@ -1,28 +1,39 @@
-"use client"; // Pastikan komponen ini hanya dijalankan di client-side
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+"use client";
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { checkTokenExpiry, clearAuthData } from '@/services/authService';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [authChecked, setAuthChecked] = useState(false);
 
     useEffect(() => {
-        // Cek apakah token ada di localStorage
-        const token = typeof window !== "undefined" ? window.localStorage.getItem("token") : null;
+        const checkAuth = () => {
+            if (!checkTokenExpiry()) {
+                clearAuthData();
+                router.replace('/Login');
+                return false;
+            }
+            return true;
+        };
 
-        if (!token) {
-            // Jika tidak ada token, redirect ke halaman login
-            router.push("/Login");
-        } else {
-            // Jika ada token, izinkan akses
-            setIsAuthenticated(true);
+        // Initial check
+        if (checkAuth()) {
+            setAuthChecked(true);
         }
+
+        // Set up periodic check
+        const interval = setInterval(checkAuth, 5 * 60 * 1000);
+
+        return () => clearInterval(interval);
     }, [router]);
 
-    // Tampilkan loading spinner atau pesan saat memeriksa autentikasi
-    if (!isAuthenticated) {
-        return <p>Loading...</p>;
+    if (!authChecked) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+            </div>
+        );
     }
 
     return <>{children}</>;

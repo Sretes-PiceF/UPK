@@ -60,7 +60,7 @@ const HalPertama = () => {
 
     return (
         <ProtectedRoute>
-            <div className="flex h-screen bg-gray-100">
+            <div className="flex min-h-screen bg-gray-100">
                 <Sidebar />
                 <main className="w-4/5 p-8 bg-white rounded-lg shadow-lg m-4">
                     <h1 className="text-2xl font-bold">Prestasi</h1>

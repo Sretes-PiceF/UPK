@@ -1,3 +1,4 @@
+'use client'
 import React, { FC } from 'react'
 import { LoginType } from './Login.type'
 import styles from '@/components/styles/Login.module.css';

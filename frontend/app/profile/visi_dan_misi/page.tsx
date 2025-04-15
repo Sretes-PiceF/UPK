@@ -12,18 +12,20 @@ const Page = () => {
 
                 <div className="mt-4">
                     <h3 className="text-xl font-semibold text-teal-700">Visi</h3>
-                    <p className="mt-2 italic">Menjadi sekolah unggulan yang berlandaskan nilai budaya dan karakter bangsa dalam menghadapi era globalisasi.</p>
+                    <p className="list-decimal list-inside mt-1">Terwujudnya warga sekolah yang berkarakter,berbudaya lingkungan,berlandaskan iman dan taqwa</p>
                 </div>
 
                 <div className="mt-6">
                     <h3 className="text-xl font-semibold text-teal-700">Misi</h3>
-                    <ul className="list-disc list-inside mt-2">
-                        <li>Menanamkan nilai-nilai budaya dan karakter bangsa kepada peserta didik.</li>
-                        <li>Mengembangkan lingkungan belajar yang kondusif, inovatif, dan berbasis teknologi.</li>
-                        <li>Meningkatkan kualitas tenaga pendidik dan kependidikan secara berkelanjutan.</li>
-                        <li>Membangun kemitraan dengan masyarakat dan dunia industri dalam mendukung pendidikan.</li>
-                        <li>Mewujudkan lulusan yang berprestasi, berakhlak mulia, dan siap menghadapi tantangan global.</li>
-                    </ul>
+                    <ol className="list-decimal list-inside mt-2">
+                        <li>Menumbuhkembangkan sikap dan amaliah keagama islaman dalam kehidupan sehari-hari untuk membekali iman dan taqwa.</li>
+                        <li>Membudayakan hidup disiplin,berbudi pekerti luhur, jujur, berjiwa sosial dan bekerja keras.</li>
+                        <li>Melaksanakan pembelajaran dan bimbingan secara efektif, sehingga setiap peserta didik dapat bekembang secara optimal sesuai dengan potensi yang dimiliki.</li>
+                        <li>Melengkapi sarana dan prasarana pendidikan dan teknologi (IPTEK).</li>
+                        <li>Menumbuhkan semangat untuk peduli dan berbudaya lingkungan.</li>
+                        <li>Mencegah pencemaran dan kerusakan lingkungan.</li>
+                        <li>Menerapkan kelestarian fungsi lingkungan hidup.</li>
+                    </ol>
                 </div>
             </section>
 

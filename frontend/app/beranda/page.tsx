@@ -61,33 +61,35 @@ export default function Beranda() {
         <div className="relative inline-block">
           <m.div
             className="
-        bg-teal-700 
-        text-white 
-        shadow-md 
-        rounded-lg 
-        px-6 
-        py-5 
-        pr-10 
-        inline-block 
-        relative 
-        z-10
-        skew-x-12 
-        origin-left-center
-      "
-            style={{ display: 'inline-block' }}
+    bg-teal-700 
+    text-white 
+    shadow-md 
+    rounded-lg 
+    px-6 
+    py-5 
+    pr-10 
+    relative 
+    z-0
+    skew-x-12 
+    origin-left-center 
+    block 
+    mt-6 
+    mx-auto 
+    sm:mx-0
+  "
             initial={{
               x: '-100%',
               opacity: 0,
-              skewX: '24deg' // Nilai awal lebih ekstrim untuk efek animasi
+              skewX: '24deg'
             }}
             animate={{
               x: 0,
               opacity: 1,
-              skewX: '12deg' // Nilai akhir
+              skewX: '12deg'
             }}
             transition={{
               duration: 0.8,
-              ease: [0.16, 1, 0.3, 1] // Kurva easing natural
+              ease: [0.16, 1, 0.3, 1]
             }}
           >
             <m.h2
@@ -103,19 +105,21 @@ export default function Beranda() {
             </m.h2>
           </m.div>
 
+
+
           {/* Shadow untuk efek visual lebih baik */}
           <div className="absolute inset-0 bg-teal-800 rounded-lg skew-x-12 -z-10 origin-left-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
 
         <m.div
-          className="text-white rounded-lg p-6 shadow-lg flex flex-col md:flex-row items-center max-w-5xl mx-auto mt-6 bg-gradient-to-r from-teal-700 to-green-400 bg-[length:100%_1000%] bg-[right_100px_top_0] overflow-hidden"
+          className="text-white rounded-lg p-4 sm:p-6 shadow-lg flex flex-col md:flex-row items-center max-w-5xl mx-auto mt-4 sm:mt-6 bg-gradient-to-r from-teal-700 to-green-400 bg-[length:100%_1000%] bg-[right_100px_top_0] overflow-hidden"
           initial={{ backgroundPosition: "right 100px top 0" }}
           animate={bgControls}
         >
-          <div className="flex-1 md:px-6">
-            {/* Animasi judul mengetik */}
+          <div className="flex-1 md:px-4 lg:px-6">
+            {/* Typing animation for title */}
             <m.h2
-              className="text-3xl font-bold mb-4 overflow-hidden whitespace-nowrap"
+              className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 overflow-hidden whitespace-normal sm:whitespace-nowrap"
               initial={{ width: 0 }}
               animate={textControls}
               transition={{ delay: 0.5, duration: 1.5, ease: [0.19, 1, 0.22, 1] }}
@@ -123,9 +127,9 @@ export default function Beranda() {
               Selamat Datang di SMP PGRI 6 Malang
             </m.h2>
 
-            {/* Animasi paragraf mengetik */}
+            {/* Typing animation for paragraph */}
             <m.p
-              className="text-lg leading-relaxed overflow-hidden"
+              className="text-base sm:text-lg leading-relaxed overflow-hidden"
               initial={{ width: 0 }}
               animate={textControls}
               transition={{ delay: 1, duration: 2, ease: [0.19, 1, 0.22, 1] }}
@@ -136,9 +140,9 @@ export default function Beranda() {
             </m.p>
           </div>
 
-          {/* Foto dengan animasi muncul */}
+          {/* Photo with appear animation */}
           <m.div
-            className="w-[190px] h-[250px] mt-6 md:mt-0 flex-shrink-0"
+            className="w-[150px] h-[200px] sm:w-[190px] sm:h-[250px] mt-4 sm:mt-6 md:mt-0 flex-shrink-0"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={photoControls}
           >
@@ -146,6 +150,7 @@ export default function Beranda() {
               src="/images/UPK/Foto_kepala_sekolah.jpg"
               className="w-full h-full rounded-lg object-cover shadow-md"
               alt="Kepala Sekolah"
+              loading="lazy"
             />
           </m.div>
         </m.div>
