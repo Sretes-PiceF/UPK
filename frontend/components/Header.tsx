@@ -107,12 +107,26 @@ const Header = () => {
       {/* Menu navbar */}
       <nav className={`mt-2 md:mt-0 ${isNavOpen ? 'block' : 'hidden'} md:block`}>
         <ul className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
-          <li>
-            <Link href="/beranda" className={styles.btn}>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 2.5,
+              duration: 0.6
+            }}
+          >
+            <Link href="/beranda" className={styles.btn} >
               Beranda
             </Link>
-          </li>
-          <li className="relative">
+          </m.li>
+          <m.li className="relative"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 2.8,
+              duration: 0.6
+            }}
+          >
             <button onClick={() => setIsProfileOpen(!isProfileOpen)} className={styles.btn}>
               Profile
             </button>
@@ -129,23 +143,51 @@ const Header = () => {
                 </Link>
               </div>
             )}
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.0,
+              duration: 0.6
+            }}
+          >
             <Link href="/ppdb" className={styles.btn}>
               PPDB
             </Link>
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.2,
+              duration: 0.6
+            }}
+          >
             <Link href="/Prestasiii" className={styles.btn}>
               Prestasi
             </Link>
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.4,
+              duration: 0.6
+            }}
+          >
             <Link href="/Prasarana" className={styles.btn}>
               Prasarana
             </Link>
-          </li>
-          <li className="relative">
+          </m.li>
+          <m.li className="relative"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.6,
+              duration: 0.6
+            }}
+          >
             <button onClick={() => setIsEkstraOpen(!isEkstraOpen)} className={styles.btn}>
               Ekstrakulikuler
             </button>
@@ -162,7 +204,7 @@ const Header = () => {
                 ))}
               </div>
             )}
-          </li>
+          </m.li>
         </ul>
       </nav>
     </m.header>

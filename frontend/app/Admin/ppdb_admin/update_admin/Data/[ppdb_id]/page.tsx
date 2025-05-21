@@ -1,14 +1,25 @@
 'use client';
 
 import Sidebar from '@/components/Sidebar';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, ChangeEvent, FormEvent } from 'react';
+
+interface PPDBData {
+    ppdb_deskripsi1: string;
+    ppdb_deskripsi2: string;
+    ppdb_namaguru_1: string;
+    ppdb_namaguru_2: string;
+    ppdb_notelp_1: string;
+    ppdb_notelp_2: string;
+    ppdb_url_gambar: string;
+}
 
 const Page = () => {
-    const { ppdb_id } = useParams();
+    const { ppdb_id } = useParams() as { ppdb_id: string };
     const router = useRouter();
-    const [inputs, setInputs] = useState({
+
+    const [inputs, setInputs] = useState<PPDBData>({
         ppdb_deskripsi1: '',
         ppdb_deskripsi2: '',
         ppdb_namaguru_1: '',
@@ -17,45 +28,46 @@ const Page = () => {
         ppdb_notelp_2: '',
         ppdb_url_gambar: ''
     });
-    const [fileImage, setFileImage] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
 
-    // Ambil data awal dari backend
+    const [fileImage, setFileImage] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    // Ambil data dari backend
     useEffect(() => {
         const fetchPpdb = async () => {
             try {
-                const result = await axios.get(`http://localhost:8000/api/ppdb/${ppdb_id}`);
+                const response = await axios.get<PPDBData>(`http://localhost:8000/api/ppdb/${ppdb_id}`);
                 setInputs({
-                    ppdb_deskripsi1: result.data.ppdb_deskripsi1 || '',
-                    ppdb_deskripsi2: result.data.ppdb_deskripsi2 || '',
-                    ppdb_namaguru_1: result.data.ppdb_namaguru_1 || '',
-                    ppdb_namaguru_2: result.data.ppdb_namaguru_2 || '',
-                    ppdb_notelp_1: result.data.ppdb_notelp_1 || '',
-                    ppdb_notelp_2: result.data.ppdb_notelp_2 || '',
-                    ppdb_url_gambar: result.data.ppdb_url_gambar || ''
+                    ppdb_deskripsi1: response.data.ppdb_deskripsi1 || '',
+                    ppdb_deskripsi2: response.data.ppdb_deskripsi2 || '',
+                    ppdb_namaguru_1: response.data.ppdb_namaguru_1 || '',
+                    ppdb_namaguru_2: response.data.ppdb_namaguru_2 || '',
+                    ppdb_notelp_1: response.data.ppdb_notelp_1 || '',
+                    ppdb_notelp_2: response.data.ppdb_notelp_2 || '',
+                    ppdb_url_gambar: response.data.ppdb_url_gambar || ''
                 });
-            } catch (error) {
-                console.error('Error fetching ppdb:', error);
+            } catch (err) {
+                const axiosErr = err as AxiosError;
+                setError(axiosErr.message || 'Gagal mengambil data');
             }
         };
 
-        fetchPpdb();
+        if (ppdb_id) fetchPpdb();
     }, [ppdb_id]);
 
-    // Handle perubahan input
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setInputs((values) => ({ ...values, [name]: value }));
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setInputs((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Handle perubahan file gambar
-    const handleImageChange = (event) => {
-        setFileImage(event.target.files[0]);
+    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setFileImage(e.target.files[0]);
+        }
     };
 
-    // Handle submit form
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
@@ -69,23 +81,23 @@ const Page = () => {
             formData.append('ppdb_namaguru_2', inputs.ppdb_namaguru_2);
             formData.append('ppdb_notelp_1', inputs.ppdb_notelp_1);
             formData.append('ppdb_notelp_2', inputs.ppdb_notelp_2);
-            formData.append('update_all', 'true'); // Kirim perintah untuk update semua data
+            formData.append('update_all', 'true');
 
             if (fileImage) {
                 formData.append('ppdb_url_gambar', fileImage);
             }
 
-            console.log("Data yang dikirim:", [...formData.entries()]); // Debugging
-
             await axios.post(`http://localhost:8000/api/ppdb/${ppdb_id}`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
+                headers: { 'Content-Type': 'multipart/form-data' }
             });
 
-            alert('Semua data berhasil diperbarui!');
+            alert('Data berhasil diperbarui!');
             router.push('/Admin/ppdb_admin');
-        } catch (error) {
-            console.error('Error updating data:', error.response || error);
-            setError('Gagal mengupdate data: ' + (error.response?.data?.error || error.message));
+        } catch (err) {
+            const axiosErr = err as AxiosError<{ message?: string }>;
+            setError(
+                axiosErr.response?.data?.message || axiosErr.message || 'Gagal update data'
+            );
         } finally {
             setIsLoading(false);
         }
@@ -97,73 +109,51 @@ const Page = () => {
             <main className="w-4/5 p-8">
                 <div className="bg-white p-6 rounded-lg shadow-lg">
                     <h1 className="text-2xl font-bold mb-2">Update PPDB</h1>
-                    <p className="text-gray-600 mb-6">Semua data akan diperbarui kecuali gambar.</p>
-                    <form onSubmit={handleSubmit}>
-                        <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+                    <p className="text-gray-600 mb-6">Semua data akan diperbarui. Gambar bisa diubah jika diperlukan.</p>
 
-                            <label className="block text-gray-700 mb-2">Deskripsi 1</label>
-                            <input
-                                type="text"
-                                name="ppdb_deskripsi1"
-                                value={inputs.ppdb_deskripsi1}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-
-                            <label className="block text-gray-700 mb-2">Deskripsi 2</label>
-                            <input
-                                type="text"
-                                name="ppdb_deskripsi2"
-                                value={inputs.ppdb_deskripsi2}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nama Guru 1</label>
-                            <input
-                                type="text"
-                                name="ppdb_namaguru_1"
-                                value={inputs.ppdb_namaguru_1}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nama Guru 2</label>
-                            <input
-                                type="text"
-                                name="ppdb_namaguru_2"
-                                value={inputs.ppdb_namaguru_2}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nomor Guru 1</label>
-                            <input
-                                type="tel"
-                                name="ppdb_notelp_1"
-                                value={inputs.ppdb_notelp_1}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nomor Guru 2</label>
-                            <input
-                                type="tel"
-                                name="ppdb_notelp_2"
-                                value={inputs.ppdb_notelp_2}
-                                onChange={handleInputChange}
-                                className="w-full p-2 border rounded mb-4"
-                            />
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
-                            >
-                                {isLoading ? 'Memproses...' : 'Update Semua Data'}
-                            </button>
-
-                            {error && <p className="mt-4 text-red-500">{error}</p>}
+                    {error && (
+                        <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                            {error}
                         </div>
+                    )}
+
+                    <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg shadow-md">
+                        {/* Upload Gambar */}
+                        <label className="block text-gray-700 mb-2">Upload Gambar</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                            className="w-full p-2 border rounded mb-4"
+                        />
+                        {/* Input Fields */}
+                        {[
+                            { label: 'Deskripsi 1', name: 'ppdb_deskripsi1' },
+                            { label: 'Deskripsi 2', name: 'ppdb_deskripsi2' },
+                            { label: 'Nama Guru 1', name: 'ppdb_namaguru_1' },
+                            { label: 'Nama Guru 2', name: 'ppdb_namaguru_2' },
+                            { label: 'Nomor Guru 1', name: 'ppdb_notelp_1' },
+                            { label: 'Nomor Guru 2', name: 'ppdb_notelp_2' },
+                        ].map(({ label, name }) => (
+                            <div key={name}>
+                                <label className="block text-gray-700 mb-2">{label}</label>
+                                <input
+                                    type={name.includes('notelp') ? 'tel' : 'text'}
+                                    name={name}
+                                    value={inputs[name as keyof PPDBData]}
+                                    onChange={handleInputChange}
+                                    className="w-full p-2 border rounded mb-4"
+                                />
+                            </div>
+                        ))}
+
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-700 disabled:bg-blue-300"
+                        >
+                            {isLoading ? 'Memproses...' : 'Update Semua Data'}
+                        </button>
                     </form>
                 </div>
             </main>

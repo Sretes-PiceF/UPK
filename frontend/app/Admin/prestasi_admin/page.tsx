@@ -6,7 +6,6 @@ import Sidebar from "@/components/Sidebar";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import {
     AlertDialog,
     AlertDialogTrigger,
@@ -19,35 +18,44 @@ import {
     AlertDialogCancel
 } from "@/components/ui/alert-dialog";
 
+interface Prestasi {
+    prestasi_id: number;
+    prestasi_juara: string;
+    prestasi_namasiswa: string;
+    prestasi_deskripsi: string;
+    prestasi_url_gambar: string;
+}
+
 const HalPertama = () => {
-    const [prestasiData, setPrestasiData] = useState([]);
+    const [prestasiData, setPrestasiData] = useState<Prestasi[]>([]);
     const [loading, setLoading] = useState(true);
-    const router = useRouter();
+    const [error, setError] = useState<string | null>(null);
+
 
     useEffect(() => {
         fetchData();
     }, []);
 
     const fetchData = async () => {
+        setLoading(true);
+        setError(null);
         try {
-            const result = await axios("http://localhost:8000/api/prestasi");
+            const result = await axios.get("http://localhost:8000/api/prestasi");
             if (result.data && Array.isArray(result.data.data)) {
                 setPrestasiData(result.data.data);
             } else {
+                setError("Data tidak tersedia");
                 console.error("Data tidak ada", result.data);
             }
         } catch (error) {
+            setError("Gagal mengambil data");
             console.error("Data error", error);
         } finally {
             setLoading(false);
         }
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
-
-    const deletePrestasi = async (prestasi_id) => {
+    const deletePrestasi = async (prestasi_id: number) => {
         try {
             await axios.delete(`http://localhost:8000/api/prestasi/${prestasi_id}`);
             alert("Sukses menghapus");
@@ -57,6 +65,22 @@ const HalPertama = () => {
             alert("Gagal menghapus data!");
         }
     };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-gray-500 text-lg">Loading...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-red-500 text-lg">{error}</p>
+            </div>
+        );
+    }
 
     return (
         <ProtectedRoute>
@@ -89,7 +113,17 @@ const HalPertama = () => {
                                         <td className="px-4 py-2 border">{rs.prestasi_juara}</td>
                                         <td className="px-4 py-2 border">{rs.prestasi_namasiswa}</td>
                                         <td className="px-4 py-2 border">{rs.prestasi_deskripsi}</td>
-                                        <td className="px-4 py-2 border">{rs.prestasi_url_gambar}</td>
+                                        <td className="px-4 py-2 border">
+                                            {rs.prestasi_url_gambar ? (
+                                                <img
+                                                    src={rs.prestasi_url_gambar}
+                                                    alt={rs.prestasi_juara}
+                                                    className="w-20 h-20 object-cover rounded"
+                                                />
+                                            ) : (
+                                                <span>Tidak ada gambar</span>
+                                            )}
+                                        </td>
                                         <td className="px-4 py-2 border">
                                             <div className="flex space-x-2">
                                                 <Link href={`/Admin/prestasi_admin/update_admin/${rs.prestasi_id}`}>
