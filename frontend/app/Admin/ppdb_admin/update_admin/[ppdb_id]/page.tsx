@@ -6,10 +6,22 @@ import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+interface PpdbData {
+    ppdb_deskripsi1: string;
+    ppdb_deskripsi2: string;
+    ppdb_namaguru_1: string;
+    ppdb_namaguru_2: string;
+    ppdb_notelp_1: string;
+    ppdb_notelp_2: string;
+    ppdb_url_gambar: string;
+}
+
 const Page = () => {
-    const { ppdb_id } = useParams();
+    const params = useParams() as { ppdb_id: string };
     const router = useRouter();
-    const [inputs, setInputs] = useState({
+    const ppdb_id = Array.isArray(params.ppdb_id) ? params.ppdb_id[0] : params.ppdb_id;
+
+    const [inputs, setInputs] = useState<PpdbData>({
         ppdb_deskripsi1: '',
         ppdb_deskripsi2: '',
         ppdb_namaguru_1: '',
@@ -18,59 +30,59 @@ const Page = () => {
         ppdb_notelp_2: '',
         ppdb_url_gambar: ''
     });
-    const [fileImage, setFileImage] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [isFirstData, setIsFirstData] = useState(false); // State untuk mengecek apakah data pertama
 
-    // Ambil data yang sedang diupdate
+    const [fileImage, setFileImage] = useState<File | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [isFirstData, setIsFirstData] = useState(false);
+
     useEffect(() => {
         const fetchPpdb = async () => {
             try {
                 const result = await axios.get(`http://localhost:8000/api/ppdb/${ppdb_id}`);
+                const data = result.data;
                 setInputs({
-                    ppdb_deskripsi1: result.data.ppdb_deskripsi1 || '',
-                    ppdb_deskripsi2: result.data.ppdb_deskripsi2 || '',
-                    ppdb_namaguru_1: result.data.ppdb_namaguru_1 || '',
-                    ppdb_namaguru_2: result.data.ppdb_namaguru_2 || '',
-                    ppdb_notelp_1: result.data.ppdb_notelp_1 || '',
-                    ppdb_notelp_2: result.data.ppdb_notelp_2 || '',
-                    ppdb_url_gambar: result.data.ppdb_url_gambar || ''
+                    ppdb_deskripsi1: data.ppdb_deskripsi1 || '',
+                    ppdb_deskripsi2: data.ppdb_deskripsi2 || '',
+                    ppdb_namaguru_1: data.ppdb_namaguru_1 || '',
+                    ppdb_namaguru_2: data.ppdb_namaguru_2 || '',
+                    ppdb_notelp_1: data.ppdb_notelp_1 || '',
+                    ppdb_notelp_2: data.ppdb_notelp_2 || '',
+                    ppdb_url_gambar: data.ppdb_url_gambar || ''
                 });
 
-                // Cek apakah data pertama (misalnya, ppdb_id = 1)
-                if (ppdb_id == 1) {
+                if (ppdb_id === '1') {
                     setIsFirstData(true);
                 }
-            } catch (error) {
-                console.error('Error fetching ppdb:', error);
+            } catch (err: unknown) {
+                if (axios.isAxiosError(err)) {
+                    console.error('Error fetching ppdb:', err.response);
+                } else {
+                    console.error('Unexpected error:', err);
+                }
             }
         };
 
-        fetchPpdb();
+        if (ppdb_id) fetchPpdb();
     }, [ppdb_id]);
 
-    // Handle perubahan input
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setInputs((values) => ({ ...values, [name]: value }));
+        setInputs((prev) => ({ ...prev, [name]: value }));
     };
 
-    // Handle submit form
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
 
         try {
             const formData = new FormData();
-            formData.append('_method', 'PUT'); // Untuk metode PUT
+            formData.append('_method', 'PUT');
 
-            // Jika hanya ingin mengupdate gambar, kirim hanya field gambar
             if (fileImage) {
                 formData.append('ppdb_url_gambar', fileImage);
             } else {
-                // Jika tidak ada gambar yang diupload, kirim semua field yang diperlukan
                 formData.append('ppdb_deskripsi1', inputs.ppdb_deskripsi1);
                 formData.append('ppdb_deskripsi2', inputs.ppdb_deskripsi2);
                 formData.append('ppdb_namaguru_1', inputs.ppdb_namaguru_1);
@@ -79,21 +91,20 @@ const Page = () => {
                 formData.append('ppdb_notelp_2', inputs.ppdb_notelp_2);
             }
 
-            // Debugging: Lihat data yang dikirim
-            for (let [key, value] of formData.entries()) {
-                console.log(key, value);
-            }
-
-            // Kirim update ke backend
             await axios.post(`http://localhost:8000/api/ppdb/${ppdb_id}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
 
             alert('Data berhasil diupdate!');
-            router.push('/Admin/ppdb_admin'); // Redirect ke halaman /Admin/ppdb_admin
-        } catch (error) {
-            console.error('Error updating data:', error.response || error);
-            setError('Gagal mengupdate data: ' + (error.response?.data?.error || error.message));
+            router.push('/Admin/ppdb_admin');
+        } catch (err: unknown) {
+            if (axios.isAxiosError(err)) {
+                console.error('Error updating data:', err.response);
+                setError('Gagal mengupdate data: ' + (err.response?.data?.error || err.message));
+            } else {
+                console.error('Unexpected error:', err);
+                setError('Terjadi kesalahan tidak diketahui');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -111,7 +122,7 @@ const Page = () => {
                             <label className="block text-gray-700 mb-2">Upload Gambar</label>
                             <input
                                 type="file"
-                                onChange={(e) => setFileImage(e.target.files[0])}
+                                onChange={(e) => setFileImage(e.target.files?.[0] ?? null)}
                                 name="ppdb_url_gambar"
                                 id="ppdb_url_gambar"
                                 className="w-full p-2 border rounded mb-4"
@@ -130,71 +141,28 @@ const Page = () => {
                                 </div>
                             )}
 
-                            <label className="block text-gray-700 mb-2">Deskripsi 1</label>
-                            <input
-                                type="text"
-                                name="ppdb_deskripsi1"
-                                id='ppdb_deskripsi1'
-                                value={inputs.ppdb_deskripsi1}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
-
-                            <label className="block text-gray-700 mb-2">Deskripsi 2</label>
-                            <input
-                                type="text"
-                                name="ppdb_deskripsi2"
-                                id='ppdb_deskripsi2'
-                                value={inputs.ppdb_deskripsi2}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nama Guru 1</label>
-                            <input
-                                type="text"
-                                name="ppdb_namaguru_1"
-                                id='ppdb_namaguru_1'
-                                value={inputs.ppdb_namaguru_1}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nama Guru 2</label>
-                            <input
-                                type="text"
-                                name="ppdb_namaguru_2"
-                                id='ppdb_namaguru_2'
-                                value={inputs.ppdb_namaguru_2}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nomor Guru 1</label>
-                            <input
-                                type="tel"
-                                name="ppdb_notelp_1"
-                                id='ppdb_notelp_1'
-                                value={inputs.ppdb_notelp_1}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
-
-                            <label className="block text-gray-700 mb-2">Nomor Guru 2</label>
-                            <input
-                                type="tel"
-                                name="ppdb_notelp_2"
-                                id='ppdb_notelp_2'
-                                value={inputs.ppdb_notelp_2}
-                                onChange={handleInputChange}
-                                className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
-                                disabled={!isFirstData}
-                            />
+                            {/* Form Fields */}
+                            {[
+                                { label: 'Deskripsi 1', name: 'ppdb_deskripsi1' },
+                                { label: 'Deskripsi 2', name: 'ppdb_deskripsi2' },
+                                { label: 'Nama Guru 1', name: 'ppdb_namaguru_1' },
+                                { label: 'Nama Guru 2', name: 'ppdb_namaguru_2' },
+                                { label: 'Nomor Guru 1', name: 'ppdb_notelp_1', type: 'tel' },
+                                { label: 'Nomor Guru 2', name: 'ppdb_notelp_2', type: 'tel' },
+                            ].map(({ label, name, type = 'text' }) => (
+                                <div key={name}>
+                                    <label className="block text-gray-700 mb-2">{label}</label>
+                                    <input
+                                        type={type}
+                                        name={name}
+                                        id={name}
+                                        value={inputs[name as keyof PpdbData]}
+                                        onChange={handleInputChange}
+                                        className={`w-full p-2 border rounded mb-4 ${!isFirstData ? 'bg-gray-200 cursor-not-allowed' : ''}`}
+                                        disabled={!isFirstData}
+                                    />
+                                </div>
+                            ))}
 
                             <button
                                 type="submit"

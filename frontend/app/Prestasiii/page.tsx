@@ -38,7 +38,7 @@ const Profile = () => {
             <main className="container mx-auto p-4">
                 <section className="text-center py-8">
                     <div className="bg-teal-700 text-white shadow-md rounded-lg px-5 py-7 pr-[20px] inline-block -skew-x-12 mr-[1030px] relative">
-                        <h2 className="text-center font-bold">• Berita Terkini</h2>
+                        <h2 className="text-center font-bold">Berita Terkini</h2>
                     </div>
                     <div className="flex flex-wrap justify-center gap-6 mt-6">
                         {/* <!-- Item Prestasi --> */}

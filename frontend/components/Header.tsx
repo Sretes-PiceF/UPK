@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import styles from './header.module.css';
 import axios from 'axios';
+import { motion as m } from 'framer-motion'
+import { Menu } from 'lucide-react'; // ikon hamburger dari lucide-react
 
 const Header = () => {
   const [prestasiData, setPrestasiData] = useState([]);
@@ -10,6 +12,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEkstraOpen, setIsEkstraOpen] = useState(false);
+  const [isNavOpen, setIsNavOpen] = useState(false); // <- untuk toggle nav
 
   const profileRef = useRef(null);
   const ekstraRef = useRef(null);
@@ -63,24 +66,67 @@ const Header = () => {
     };
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
-    <header className="bg-teal-700 text-white py-0 px-6 flex items-center justify-between">
-      <div className="flex items-center">
-        <img src="/images/UPK/logo.png" alt="Logo SMP PGRI 6 Malang" width={80} height={80} />
-        <h1 className="font-bold text-xl ml-1">SMP PGRI 6 Malang</h1>
+    <m.header className="bg-teal-700 text-white py-2 px-4 flex flex-col md:flex-row md:items-center md:justify-between"
+      initial={{ x: -20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{
+        delay: 0.8,
+        duration: 0.6
+      }}
+    >
+      <div className="flex items-center justify-between w-full md:w-auto">
+        <div className="flex items-center">
+          <m.img src="/images/UPK/logo.png" alt="Logo SMP PGRI 6 Malang" width={60} height={60}
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 1.0,
+              duration: 0.6
+            }}
+          />
+          <m.h1 className="font-bold text-lg ml-2"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 1.7,
+              duration: 0.6
+            }}
+          >SMP PGRI 6 Malang</m.h1>
+        </div>
+        {/* Hamburger */}
+        <button
+          className="md:hidden focus:outline-none"
+          onClick={() => setIsNavOpen(!isNavOpen)}
+        >
+          <Menu size={28} />
+        </button>
       </div>
-      <nav className="navbar">
-        <ul className="flex space-x-2 ml-10 items-center">
-          <li>
-            <Link href="/beranda" className={styles.btn}>
+
+      {/* Menu navbar */}
+      <nav className={`mt-2 md:mt-0 ${isNavOpen ? 'block' : 'hidden'} md:block`}>
+        <ul className="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 2.5,
+              duration: 0.6
+            }}
+          >
+            <Link href="/beranda" className={styles.btn} >
               Beranda
             </Link>
-          </li>
-          <li className="relative">
+          </m.li>
+          <m.li className="relative"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 2.8,
+              duration: 0.6
+            }}
+          >
             <button onClick={() => setIsProfileOpen(!isProfileOpen)} className={styles.btn}>
               Profile
             </button>
@@ -97,39 +143,71 @@ const Header = () => {
                 </Link>
               </div>
             )}
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.0,
+              duration: 0.6
+            }}
+          >
             <Link href="/ppdb" className={styles.btn}>
-              Ppdb
+              PPDB
             </Link>
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.2,
+              duration: 0.6
+            }}
+          >
             <Link href="/Prestasiii" className={styles.btn}>
               Prestasi
             </Link>
-          </li>
-          <li>
+          </m.li>
+          <m.li
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.4,
+              duration: 0.6
+            }}
+          >
             <Link href="/Prasarana" className={styles.btn}>
               Prasarana
             </Link>
-          </li>
-          <li className="relative">
+          </m.li>
+          <m.li className="relative"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{
+              delay: 3.6,
+              duration: 0.6
+            }}
+          >
             <button onClick={() => setIsEkstraOpen(!isEkstraOpen)} className={styles.btn}>
               Ekstrakulikuler
             </button>
             {isEkstraOpen && (
               <div ref={ekstraRef} className={`${styles.dropdown} ${styles.dropdownAnimation}`}>
                 {ekstrakulikulerData.map((rs, index) => (
-                  <Link href={`/ekstrakulikuler/${rs.ekstrakulikuler_id}`} className={styles.dropdownItem} key={rs.ekstrakulikuler_id || index}>
+                  <Link
+                    href={`/ekstrakulikuler/${rs.ekstrakulikuler_id}`}
+                    className={styles.dropdownItem}
+                    key={rs.ekstrakulikuler_id || index}
+                  >
                     {rs.ekstrakulikuler_judul}
                   </Link>
                 ))}
               </div>
             )}
-          </li>
+          </m.li>
         </ul>
       </nav>
-    </header>
+    </m.header>
   );
 };
 

@@ -4,43 +4,48 @@ import Link from "next/link";
 export default function Footer() {
     return (
         <>
-            <div className="container mx-auto text-center my-6">
-                <div className="bg-green-500 text-white px-4 py-2 inline-block rounded-t-lg text-lg font-semibold">
+            <div className="container mx-auto text-center my-4 md:my-6 px-4">
+                <div className="bg-green-500 text-white px-4 py-2 inline-block rounded-t-lg text-base md:text-lg font-semibold">
                     Sosial Media Kami:
                 </div>
             </div>
-            <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-6 w-full">
-                <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-6 text-center md:text-left">
-                    {/* <!-- Bagian Telepon --> */}
-                    <div className="flex items-center space-x-2 my-2 ml-7">
+
+            <footer className="bg-gradient-to-r from-gray-800 to-gray-900 text-white py-4 md:py-6 w-full">
+                <div className="container mx-auto flex flex-col md:flex-row items-center justify-between px-4 md:px-6 gap-3 md:gap-0">
+                    {/* Phone Section */}
+                    <div className="flex items-center justify-center md:justify-start space-x-2">
                         <i className="fa-solid fa-phone text-green-400"></i>
-                        <span>(0341)368086</span>
+                        <span>(0341) 368086</span>
                     </div>
-                    {/* <!-- Bagian Alamat --> */}
-                    <div className="items-center justify-center my-2 w-full md:w-auto ml-80">
-                        <i className="fas fa-map-marker-alt text-red-400 mr-2"></i>
-                        <span className="max-w-md text-justify md:text-center" >
-                            Jl. Kolonel Sugiono VIII No.82, Ciptomulyo, Kec. Sukun, Kota Malang, Jawa Timur
+
+                    {/* Address Section */}
+                    <div className="flex items-center justify-center space-x-2 md:ml-44">
+                        <i className="fas fa-map-marker-alt text-red-400"></i>
+                        <span className="text-sm md:text-base whitespace-nowrap">
+                            Jl. Kolonel Sugiono VIII No.82, Ciptomulyo, Kec. Sukun
                         </span>
                     </div>
-                    <div className="ml-52">
-                        {/* <!-- Bagian Sosial Media --> */}
-                        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 my-2">
-                            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 my-2">
-                                <Link href="https://www.instagram.com/smppgri6malang" target="_blank" rel="noopener nore ferrer">
-                            <div className="flex items-center space-x-2">
-                                <i className="fab fa-instagram text-pink-400"></i>
-                                <span>@smppgri6malang</span>
-                            </div>
-                            </Link>
-                            <Link href="https://www.tiktok.com/@sprinam_official" target="_blank" rel="noopener noreferrer">
-                            <div className="flex items-center space-x-2">
-                                <i className="fab fa-tiktok text-white"></i>
-                                <span>@sprinam_official</span>
-                            </div>
-                            </Link>
-                            </div>
-                        </div>
+
+                    {/* Social Media Section */}
+                    <div className="flex flex-col sm:flex-row items-center gap-3 md:gap-6">
+                        <Link
+                            href="https://www.instagram.com/smppgri6malang"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+                        >
+                            <i className="fab fa-instagram text-pink-400"></i>
+                            <span className="text-sm md:text-base">@smppgri6malang</span>
+                        </Link>
+                        <Link
+                            href="https://www.tiktok.com/@sprinam_official"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+                        >
+                            <i className="fab fa-tiktok text-white"></i>
+                            <span className="text-sm md:text-base">@sprinam_official</span>
+                        </Link>
                     </div>
                 </div>
             </footer>
