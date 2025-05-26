@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link"
+import Image from "next/image"
 import Sidebar from "@/components/Sidebar"
 import { Pencil, Trash } from "lucide-react"
 import ProtectedRoute from "@/components/ProtectedRoute"
@@ -150,7 +151,13 @@ const HalPertama = () => {
                             {gambarData.map((gambar, index) => (
                                 gambar.ppdb_url_gambar && (
                                     <div key={gambar.ppdb_id || index} className="border p-4 rounded-lg">
-                                        <img src={gambar.ppdb_url_gambar} alt={`Gambar ${index + 1}`} className="w-full h-auto rounded-lg" />
+                                        <Image
+                                            src={`http://localhost:8000/storage/images/ppdb/${gambar.ppdb_url_gambar}`}
+                                            alt={`Gambar ${index + 1}`}
+                                            width={400}
+                                            height={300}
+                                            className="w-full h-auto rounded-lg object-cover"
+                                        />
                                         <div className="flex space-x-2 mt-2">
                                             <Link href={`/Admin/ppdb_admin/update_admin/Gambar/${gambar.ppdb_id}`}>
                                                 <button className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-700">

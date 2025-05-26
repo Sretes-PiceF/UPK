@@ -34,7 +34,7 @@ class prestasiController extends Controller
         if ($request->hasFile('prestasi_url_gambar')) {
             $image = $request->file('prestasi_url_gambar');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('storage/images/prestasi'), $imageName);
+            $image->storeAs('images/prestasi', $imageName, 'public');
         }
 
         $prestasi_id = uniqid();

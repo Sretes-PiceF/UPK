@@ -1,37 +1,51 @@
-'use client'
+'use client';
 
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import { Phone } from "lucide-react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { Phone } from 'lucide-react';
+import Image from 'next/image';
+import axios from 'axios';
+
+interface PpdbItem {
+    ppdb_id: number;
+    ppdb_url_gambar: string;
+    ppdb_deskripsi1: string;
+    ppdb_deskripsi2: string;
+    ppdb_notelp_1: string;
+    ppdb_namaguru_1: string;
+    ppdb_notelp_2: string;
+    ppdb_namaguru_2: string;
+}
 
 const Page = () => {
-    const [ppdbData, setPpdbData] = useState([]);
+    const [ppdbData, setPpdbData] = useState<PpdbItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const result = await axios.get('http://localhost:8000/api/ppdb');
+                if (result.data && Array.isArray(result.data.data)) {
+                    setPpdbData(result.data.data);
+                } else {
+                    console.error('Data tidak valid:', result.data);
+                }
+            } catch (error) {
+                console.error('Gagal mengambil data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchData();
     }, []);
 
-    const fetchData = async () => {
-        try {
-            const result = await axios("http://localhost:8000/api/ppdb");
-            if (result.data && Array.isArray(result.data.data)) {
-                setPpdbData(result.data.data);
-            } else {
-                console.error("Data tidak ada", result.data);
-            }
-        } catch (error) {
-            console.error("Data error", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="text-center mt-10">Loading...</div>;
     }
+
+    const firstItem = ppdbData[0];
 
     return (
         <>
@@ -39,56 +53,68 @@ const Page = () => {
 
             {/* Container Utama */}
             <div className="flex flex-col md:flex-row mx-4 md:m-[50px] md:ml-[100px] gap-6 relative">
-                {/* Sisi Kiri - Deskripsi (Desktop only) */}
-                <div className="hidden md:block w-[175px] h-[300px] bg-gray-200 p-10 absolute left-0 top-1/2 transform -translate-y-1/2">
-                    <p className="text-center">{ppdbData[0]?.ppdb_deskripsi1}</p>
-                </div>
+                {/* Sisi Kiri - Deskripsi */}
+                {firstItem?.ppdb_deskripsi1 && (
+                    <div className="hidden md:block w-[175px] h-[300px] bg-gray-200 p-10 absolute left-0 top-1/2 transform -translate-y-1/2">
+                        <p className="text-center">{firstItem.ppdb_deskripsi1}</p>
+                    </div>
+                )}
 
-                {/* Container Gambar Tengah */}
+                {/* Gambar Tengah */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full md:w-1/2 mx-auto">
-                    {ppdbData.map((rs, index) => (
-                        <div key={rs.ppdb_id || index} className="flex justify-center">
-                            <img
-                                src={`http://localhost:8000/storage/images/ppdb/${rs.ppdb_url_gambar}`}
-                                className="w-full max-w-[300px] h-[300px] object-cover"
+                    {ppdbData.map((item) => (
+                        <div key={item.ppdb_id} className="flex justify-center">
+                            <Image
+                                src={`http://localhost:8000/storage/images/ppdb/${item.ppdb_url_gambar}`}
                                 alt="Gambar PPDB"
+                                width={300}
+                                height={300}
+                                className="rounded shadow-md object-cover"
                             />
                         </div>
                     ))}
                 </div>
 
-                {/* Sisi Kanan - Deskripsi (Desktop only) */}
-                <div className="hidden md:block w-[175px] h-[300px] bg-gray-200 p-10 absolute right-0 top-1/2 transform -translate-y-1/2">
-                    <p className="text-center">{ppdbData[0]?.ppdb_deskripsi2}</p>
-                </div>
+                {/* Sisi Kanan - Deskripsi */}
+                {firstItem?.ppdb_deskripsi2 && (
+                    <div className="hidden md:block w-[175px] h-[300px] bg-gray-200 p-10 absolute right-0 top-1/2 transform -translate-y-1/2">
+                        <p className="text-center">{firstItem.ppdb_deskripsi2}</p>
+                    </div>
+                )}
             </div>
 
-            {/* Container untuk No Telpon dan Google Maps */}
+            {/* Info Kontak dan Maps */}
             <div className="relative w-full px-4 md:px-0 mt-10 md:mt-[100px] min-h-[350px]">
-                {/* Container No Telpon Pengurus */}
-                <div className="md:absolute bottom-5 left-5 w-full md:w-[300px] h-[150px] p-5 bg-gray-500 rounded-lg shadow-lg flex flex-col justify-start">
-                    <div className="text-center mb-4">
-                        <h1 className="text-sm font-semibold text-white">Info PPDB Jangan lupa untuk Join:</h1>
+                {/* Kontak Pengurus */}
+                {firstItem && (
+                    <div className="md:absolute bottom-5 left-5 w-full md:w-[300px] h-[150px] p-5 bg-gray-500 rounded-lg shadow-lg flex flex-col justify-start">
+                        <div className="text-center mb-4">
+                            <h1 className="text-sm font-semibold text-white">Info PPDB Jangan lupa untuk Join:</h1>
+                        </div>
+                        <div className="flex flex-col gap-2 md:ml-7">
+                            {firstItem.ppdb_notelp_1 && (
+                                <a
+                                    href={`https://wa.me/${firstItem.ppdb_notelp_1}`}
+                                    className="text-sm font-semibold text-white flex items-center gap-2"
+                                >
+                                    <Phone className="text-green-500" />
+                                    {firstItem.ppdb_notelp_1} | {firstItem.ppdb_namaguru_1}
+                                </a>
+                            )}
+                            {firstItem.ppdb_notelp_2 && (
+                                <a
+                                    href={`https://wa.me/${firstItem.ppdb_notelp_2}`}
+                                    className="text-sm font-semibold text-white flex items-center gap-2"
+                                >
+                                    <Phone className="text-green-500" />
+                                    {firstItem.ppdb_notelp_2} | {firstItem.ppdb_namaguru_2}
+                                </a>
+                            )}
+                        </div>
                     </div>
-                    <div className="flex flex-col gap-2 md:ml-7">
-                        <a
-                            href={`https://wa.me/${ppdbData[0]?.ppdb_notelp_1}`}
-                            className="text-sm font-semibold text-white flex items-center gap-2"
-                        >
-                            <Phone className="text-green-500" />
-                            {ppdbData[0]?.ppdb_notelp_1} | {ppdbData[0]?.ppdb_namaguru_1}
-                        </a>
-                        <a
-                            href={`https://wa.me/${ppdbData[0]?.ppdb_notelp_2}`}
-                            className="text-sm font-semibold text-white flex items-center gap-2"
-                        >
-                            <Phone className="text-green-500" />
-                            {ppdbData[0]?.ppdb_notelp_2} | {ppdbData[0]?.ppdb_namaguru_2}
-                        </a>
-                    </div>
-                </div>
+                )}
 
-                {/* Kotak Lokasi Google Maps */}
+                {/* Lokasi Maps */}
                 <div className="md:absolute bottom-5 right-5 w-full md:w-[700px] h-[250px] md:h-[300px] mt-4 md:mt-0 p-1 md:p-5 bg-gray-100 rounded-lg shadow-lg">
                     <div className="absolute inset-0 border-4 border-white rounded-lg pointer-events-none hidden md:block"></div>
                     <iframe

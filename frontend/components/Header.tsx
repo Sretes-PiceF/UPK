@@ -1,71 +1,54 @@
 'use client';
+
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import styles from './header.module.css';
 import axios from 'axios';
-import { motion as m } from 'framer-motion'
-import { Menu } from 'lucide-react'; // ikon hamburger dari lucide-react
+import { motion as m } from 'framer-motion';
+import { Menu } from 'lucide-react';
+
+type Ekstrakulikuler = {
+  ekstrakulikuler_id: string;
+  ekstrakulikuler_judul: string;
+};
 
 const Header = () => {
-  const [prestasiData, setPrestasiData] = useState([]);
-  const [ekstrakulikulerData, setEkstrakulikulerData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [ekstrakulikulerData, setEkstrakulikulerData] = useState<Ekstrakulikuler[]>([]);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isEkstraOpen, setIsEkstraOpen] = useState(false);
-  const [isNavOpen, setIsNavOpen] = useState(false); // <- untuk toggle nav
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
-  const profileRef = useRef(null);
-  const ekstraRef = useRef(null);
+  const profileRef = useRef<HTMLDivElement>(null);
+  const ekstraRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetchData();
+    const fetchEkstrakulikulerData = async () => {
+      try {
+        const result = await axios("http://localhost:8000/api/ekstrakulikuler");
+        if (Array.isArray(result.data?.data)) {
+          setEkstrakulikulerData(result.data.data);
+        }
+      } catch (error) {
+        console.error("Gagal fetch ekstrakulikuler:", error);
+      }
+    };
+
     fetchEkstrakulikulerData();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const result = await axios("http://localhost:8000/api/prestasi");
-      if (result.data && Array.isArray(result.data.data)) {
-        setPrestasiData(result.data.data);
-      } else {
-        console.error("Data tidak ada", result.data);
-      }
-    } catch (error) {
-      console.error("Data error", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchEkstrakulikulerData = async () => {
-    try {
-      const result = await axios("http://localhost:8000/api/ekstrakulikuler");
-      if (result.data && Array.isArray(result.data.data)) {
-        setEkstrakulikulerData(result.data.data);
-      } else {
-        console.error("Data ekstrakulikuler tidak ada", result.data);
-      }
-    } catch (error) {
-      console.error("Data ekstrakulikuler error", error);
-    }
-  };
-
-  const handleClickOutside = (event) => {
-    if (profileRef.current && !profileRef.current.contains(event.target)) {
-      setIsProfileOpen(false);
-    }
-    if (ekstraRef.current && !ekstraRef.current.contains(event.target)) {
-      setIsEkstraOpen(false);
-    }
-  };
-
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsProfileOpen(false);
+      }
+      if (ekstraRef.current && !ekstraRef.current.contains(event.target as Node)) {
+        setIsEkstraOpen(false);
+      }
     };
-  }, []);
 
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <m.header className="bg-teal-700 text-white py-2 px-4 flex flex-col md:flex-row md:items-center md:justify-between"
@@ -78,7 +61,7 @@ const Header = () => {
     >
       <div className="flex items-center justify-between w-full md:w-auto">
         <div className="flex items-center">
-          <m.img src="/images/UPK/logo.png" alt="Logo SMP PGRI 6 Malang" width={60} height={60}
+          <m.img src="/images/UPK/Logo.png" alt="Logo SMP PGRI 6 Malang" width={60} height={60}
             initial={{ x: -20, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{
