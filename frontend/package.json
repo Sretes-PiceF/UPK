@@ -12,6 +12,7 @@
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-dropdown-menu": "^2.1.6",
     "@radix-ui/react-slot": "^1.1.2",
+    "@react-google-maps/api": "^2.20.6",
     "axios": "^1.8.1",
     "botstrap": "^0.20.1",
     "class-variance-authority": "^0.7.1",

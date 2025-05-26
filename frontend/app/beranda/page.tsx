@@ -51,7 +51,7 @@ export default function Beranda() {
       });
     };
     sequence();
-  }, []);
+  }, [bgControls, photoControls, textControls]);
 
   return (
     <>
@@ -146,10 +146,12 @@ export default function Beranda() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={photoControls}
           >
-            <img
-              src="/images/UPK/Foto_kepala_sekolah.jpg"
-              className="w-full h-full rounded-lg object-cover shadow-md"
+            <Image
+              src="/images/UPK/Kepala-sekolah.jpg"
               alt="Kepala Sekolah"
+              width={190}
+              height={250}
+              className="w-full h-full rounded-lg object-cover shadow-md"
               loading="lazy"
             />
           </m.div>
@@ -167,7 +169,7 @@ export default function Beranda() {
             viewport={{ once: true, margin: "-50px" }}
             variants={cardVariants}
           >
-            <img
+            <Image
               src="/images/UPK/nobar.jpg"
               width={400}
               height={200}

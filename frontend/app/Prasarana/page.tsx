@@ -1,5 +1,6 @@
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import Image from "next/image";
 
 const Prasarana = () => {
     return (
@@ -9,7 +10,13 @@ const Prasarana = () => {
                 {/* Lab Komputer */}
                 <div className="flex flex-col md:flex-row items-center mb-8">
                     <div className="w-full md:w-1/2">
-                        <img src="/images/UPK/Lab Kom.jpg" alt="Lab Komputer" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                        <Image
+                            src="/images/UPK/Lab Kom.jpg"
+                            alt="Lab Komputer"
+                            width={600}
+                            height={400}
+                            className="w-full h-64 object-cover rounded-lg shadow-lg"
+                        />
                     </div>
                     <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg mt-4 md:mt-0 md:ml-8">
                         <h2 className="text-xl font-bold mb-4">Lab Komputer</h2>
@@ -30,14 +37,26 @@ const Prasarana = () => {
                         </div>
                     </div>
                     <div className="w-full md:w-1/2 order-1 md:order-2">
-                        <img src="/images/UPK/musholla.jpg" alt="Musholla" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                        <Image
+                            src="/images/UPK/musholla.jpg"
+                            alt="Musholla"
+                            width={600}
+                            height={400}
+                            className="w-full h-64 object-cover rounded-lg shadow-lg"
+                        />
                     </div>
                 </div>
 
                 {/* Lapangan */}
                 <div className="flex flex-col md:flex-row items-center mb-8">
                     <div className="w-full md:w-1/2">
-                        <img src="/images/UPK/lapangan.jpg" alt="Lapangan" className="w-full h-64 object-cover rounded-lg shadow-lg" />
+                        <Image
+                            src="/images/UPK/lapangan.jpg"
+                            alt="Lapangan"
+                            width={600}
+                            height={400}
+                            className="w-full h-64 object-cover rounded-lg shadow-lg"
+                        />
                     </div>
                     <div className="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-lg mt-4 md:mt-0 md:ml-8">
                         <h2 className="text-xl font-bold mb-4">Lapangan</h2>

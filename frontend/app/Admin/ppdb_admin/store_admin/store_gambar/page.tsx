@@ -6,9 +6,18 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+
 const Buat = () => {
+    interface PpdbData {
+        ppdb_deskripsi1?: string;
+        ppdb_deskripsi2?: string;
+        ppdb_namaguru_1?: string;
+        ppdb_namaguru_2?: string;
+        ppdb_notelp_1?: string;
+        ppdb_notelp_2?: string;
+    }
+    const [firstData, setFirstData] = useState<PpdbData | null>(null);
     const [gambar, setGambar] = useState<File | null>(null);
-    const [firstData, setFirstData] = useState<any>(null);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const router = useRouter();
@@ -45,12 +54,12 @@ const Buat = () => {
         try {
             const formData = new FormData();
             formData.append("ppdb_url_gambar", gambar!);
-            formData.append("ppdb_deskripsi1", firstData.ppdb_deskripsi1 ?? '');
-            formData.append("ppdb_deskripsi2", firstData.ppdb_deskripsi2 ?? '');
-            formData.append("ppdb_namaguru_1", firstData.ppdb_namaguru_1 ?? '');
-            formData.append("ppdb_namaguru_2", firstData.ppdb_namaguru_2 ?? '');
-            formData.append("ppdb_notelp_1", firstData.ppdb_notelp_1 ?? '');
-            formData.append("ppdb_notelp_2", firstData.ppdb_notelp_2 ?? '');
+            formData.append("ppdb_deskripsi1", firstData!.ppdb_deskripsi1 ?? '');
+            formData.append("ppdb_deskripsi2", firstData!.ppdb_deskripsi2 ?? '');
+            formData.append("ppdb_namaguru_1", firstData!.ppdb_namaguru_1 ?? '');
+            formData.append("ppdb_namaguru_2", firstData!.ppdb_namaguru_2 ?? '');
+            formData.append("ppdb_notelp_1", firstData!.ppdb_notelp_1 ?? '');
+            formData.append("ppdb_notelp_2", firstData!.ppdb_notelp_2 ?? '');
 
             const token = localStorage.getItem('access_token');
 
@@ -62,12 +71,14 @@ const Buat = () => {
             });
 
             router.push("/Admin/ppdb_admin");
-        } catch (error: any) {
-            const message = error.response?.data?.message || "Terjadi kesalahan saat mengirim data.";
-            console.error("Upload error:", error);
-            setErrors(prev => ({ ...prev, submit: message }));
-        } finally {
-            setIsSubmitting(false);
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const message = error.response?.data?.message || "Terjadi kesalahan saat mengirim data.";
+                console.error("Upload error:", error);
+                setErrors(prev => ({ ...prev, submit: message }));
+            } else {
+                setErrors(prev => ({ ...prev, submit: "Terjadi kesalahan yang tidak diketahui." }));
+            }
         }
     };
 

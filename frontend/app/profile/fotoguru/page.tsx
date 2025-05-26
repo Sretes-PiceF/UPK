@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import React from "react";
+import Image from "next/image";
 
 const Foto = () => {
     return (
@@ -14,9 +15,28 @@ const Foto = () => {
 
                 {/* Gallery Section */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 justify-center">
-                    <img src="/images/foto_guru/foto1.jpg" alt="Guru 1" className="rounded-lg shadow-md object-cover w-full h-64" />
-                    <img src="/images/foto_guru/foto2.jpg" alt="Guru 2" className="rounded-lg shadow-md object-cover w-full h-64" />
-                    <img src="/images/foto_guru/foto3.jpg" alt="Guru 3" className="rounded-lg shadow-md object-cover w-full h-64" />
+                    <Image
+                        src="/images/foto_guru/foto1.jpg"
+                        alt="Guru 1"
+                        width={300}
+                        height={256}
+                        className="rounded-lg shadow-md object-cover w-full h-64"
+                    />
+                    <Image
+                        src="/images/foto_guru/foto2.jpg"
+                        alt="Guru 2"
+                        width={300}
+                        height={256}
+                        className="rounded-lg shadow-md object-cover w-full h-64"
+                    />
+                    <Image
+                        src="/images/foto_guru/foto3.jpg"
+                        alt="Guru 3"
+                        width={300}
+                        height={256}
+                        className="rounded-lg shadow-md object-cover w-full h-64"
+                    />
+
                 </div>
             </section>
             <Footer />

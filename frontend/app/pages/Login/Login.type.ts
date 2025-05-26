@@ -7,7 +7,7 @@ export interface LoginType {
     error: string;
     username: string;
     password: string;
-    isLoading: string;
+    isLoading: boolean;
 }
 
 export interface LoginResponse {

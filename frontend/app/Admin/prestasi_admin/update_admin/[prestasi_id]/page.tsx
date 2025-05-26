@@ -30,25 +30,25 @@ const Page = () => {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchPrestasi = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:8000/api/prestasi/${prestasi_id}`);
+                setInputs({
+                    prestasi_juara: data.prestasi_juara || '',
+                    prestasi_namasiswa: data.prestasi_namasiswa || '',
+                    prestasi_deskripsi: data.prestasi_deskripsi || '',
+                    prestasi_url_gambar: data.prestasi_url_gambar || ''
+                });
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError('Gagal memuat data prestasi.');
+            }
+        };
+
         if (prestasi_id) {
             fetchPrestasi();
         }
     }, [prestasi_id]);
-
-    const fetchPrestasi = async () => {
-        try {
-            const { data } = await axios.get(`http://localhost:8000/api/prestasi/${prestasi_id}`);
-            setInputs({
-                prestasi_juara: data.prestasi_juara || '',
-                prestasi_namasiswa: data.prestasi_namasiswa || '',
-                prestasi_deskripsi: data.prestasi_deskripsi || '',
-                prestasi_url_gambar: data.prestasi_url_gambar || ''
-            });
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            setError('Gagal memuat data prestasi.');
-        }
-    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
