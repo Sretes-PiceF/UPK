@@ -2,7 +2,7 @@
 
 import React, { FC } from 'react'
 import { LoginType } from './Login.type'
-import styles from '@/components/styles/Login.module.css';
+import styles from "@/components/styles/Login.module.css"
 import { motion as m } from 'framer-motion';
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";

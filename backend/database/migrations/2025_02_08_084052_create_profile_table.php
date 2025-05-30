@@ -17,10 +17,6 @@ return new class extends Migration
             $table->integer('profile_siswa')->nullable(false);
             $table->integer('jumlah_prestasi')->default(0);
             $table->integer('jumlah_ekstrakulikuler')->default(0);
-            // 
-            //Membuat Foreign Key(penyambungan colom antar table)
-            // $table->foreign('profile_prestasi_id')->references('prestasi_id')->on('prestasi')->onDelete('cascade')->onUpdate('cascade');
-            // $table->foreign('profile_ekstrakulikuler_id')->references('ekstrakulikuler_id')->on('ekstrakulikuler')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
