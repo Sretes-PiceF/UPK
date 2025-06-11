@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_app/pages/prestasi/update/update_prestasi.dart';
 import 'dart:convert';
 import '../../widgets/sidebar.dart';
+import '../prestasi/store/create_prestasi.dart';
 
 class Prestasi {
   final String prestasiId;
@@ -174,7 +176,18 @@ class _PrestasiPageState extends State<PrestasiPage> {
                           IconButton(
                             icon: const Icon(Icons.edit, color: Colors.orange),
                             onPressed: () {
-                              // Navigasi ke halaman edit prestasi
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => UpdatePrestasiPage(
+                                    id: prestasi.prestasiId,
+                                  ),
+                                ),
+                              ).then((_) {
+                                setState(() {
+                                  _prestasiData = fetchPrestasiData();
+                                });
+                              });
                             },
                           ),
                           IconButton(
@@ -215,6 +228,21 @@ class _PrestasiPageState extends State<PrestasiPage> {
               );
             },
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal,
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const CreatePrestasiPage()),
+          );
+          if (result != null) {
+            setState(() {
+              _prestasiData = fetchPrestasiData();
+            });
+          }
         },
       ),
     );
