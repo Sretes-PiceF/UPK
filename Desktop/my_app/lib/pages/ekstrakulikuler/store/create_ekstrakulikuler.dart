@@ -92,11 +92,6 @@ class _CreateEkstrakulikulerPageState extends State<CreateEkstrakulikulerPage> {
       ),
       body: Row(
         children: [
-          Container(
-            width: 80,
-            color: Colors.teal[900],
-            child: const Icon(Icons.menu, color: Colors.white),
-          ),
           Expanded(
             child: Center(
               child: SingleChildScrollView(
@@ -134,7 +129,21 @@ class _CreateEkstrakulikulerPageState extends State<CreateEkstrakulikulerPage> {
                             ),
                             child: _gambar != null
                                 ? Image.file(_gambar!, fit: BoxFit.cover)
-                                : const Center(child: Text('Pilih Gambar')),
+                                : const Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.image,
+                                          size: 50,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text('Pilih Gambar'),
+                                      ],
+                                    ),
+                                  ),
                           ),
                         ),
                         const SizedBox(height: 16),

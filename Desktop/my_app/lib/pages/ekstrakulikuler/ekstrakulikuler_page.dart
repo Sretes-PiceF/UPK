@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import '../../widgets/sidebar.dart';
 import '../ekstrakulikuler/store/create_ekstrakulikuler.dart';
+import '../ekstrakulikuler/update/update_ekstrakulikuler.dart';
 
 class Ekstrakulikuler {
   final String id;
@@ -166,9 +167,20 @@ class _EkstrakulikulerPageState extends State<EkstrakulikulerPage> {
                           IconButton(
                             icon: const Icon(Icons.edit, color: Colors.orange),
                             onPressed: () {
-                              // Navigasi ke halaman edit bisa ditambahkan di sini
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      UpdateEkstrakulikulerPage(id: ekstra.id),
+                                ),
+                              ).then((_) {
+                                setState(() {
+                                  _ekstraData = fetchEkstrakulikuler();
+                                });
+                              });
                             },
                           ),
+
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
                             onPressed: () {
@@ -210,7 +222,7 @@ class _EkstrakulikulerPageState extends State<EkstrakulikulerPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.teal,
         onPressed: () {
           Navigator.push(
             context,

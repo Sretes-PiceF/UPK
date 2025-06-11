@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_app/pages/ppdb/store/gambar_page.dart';
 import 'dart:convert';
 import '../../widgets/sidebar.dart';
+import '../ppdb/update/update_data.dart';
+import '../ppdb/update/update_gambar.dart';
 
 class PPDBItem {
   final String ppdbId;
@@ -57,6 +60,46 @@ class _PPDBPageState extends State<PPDBPage>
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
     fetchPPDB();
+  }
+
+  Future<void> deleteGambar(String id) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Konfirmasi'),
+        content: const Text('Yakin ingin menghapus gambar ini?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    final response = await http.delete(
+      Uri.parse('http://localhost:8000/api/ppdb/$id'),
+      headers: {'Accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Gambar berhasil dihapus!')));
+      fetchPPDB(); // Auto-refresh
+    } else {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Gagal menghapus gambar')));
+    }
   }
 
   @override
@@ -144,10 +187,15 @@ class _PPDBPageState extends State<PPDBPage>
           return _tabController.index == 1
               ? FloatingActionButton(
                   onPressed: () {
-                    // Tambah gambar baru
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CreatePpdbPage(),
+                      ),
+                    ).then((_) => fetchPPDB()); // Refresh data setelah kembali
                   },
                   backgroundColor: Colors.teal,
-                  child: const Icon(Icons.add, color: Colors.white),
+                  child: const Icon(Icons.add),
                 )
               : const SizedBox.shrink();
         },
@@ -188,7 +236,15 @@ class _PPDBPageState extends State<PPDBPage>
             alignment: Alignment.centerRight,
             child: ElevatedButton.icon(
               onPressed: () {
-                // Edit data
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        UpdatePPDBPage(id: ppdbData.first.ppdbId),
+                  ),
+                ).then(
+                  (_) => fetchPPDB(),
+                ); // Refresh data setelah kembali dari edit
               },
               icon: const Icon(Icons.edit, size: 18),
               label: const Text('Edit Data'),
@@ -228,6 +284,7 @@ class _PPDBPageState extends State<PPDBPage>
     );
   }
 
+  // Dan di dalam _buildGambarPPDBView, modifikasi IconButton add
   Widget _buildGambarPPDBView(List<PPDBItem> gambarData) {
     if (gambarData.isEmpty) {
       return Center(
@@ -237,7 +294,12 @@ class _PPDBPageState extends State<PPDBPage>
             IconButton(
               icon: const Icon(Icons.add_circle, size: 50, color: Colors.teal),
               onPressed: () {
-                // Tambah gambar baru
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreatePpdbPage(),
+                  ),
+                ).then((_) => fetchPPDB()); // Refresh data setelah kembali
               },
             ),
             const SizedBox(height: 10),
@@ -302,14 +364,24 @@ class _PPDBPageState extends State<PPDBPage>
                         icon: const Icon(Icons.edit, size: 18),
                         color: Colors.orange,
                         onPressed: () {
-                          // Edit gambar
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  UpdatePPDBGambarPage(id: item.ppdbId),
+                            ),
+                          ).then((result) {
+                            if (result == true) {
+                              fetchPPDB(); // Auto-refresh jika gambar diupdate
+                            }
+                          });
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete, size: 18),
                         color: Colors.red,
                         onPressed: () {
-                          // Hapus gambar
+                          deleteGambar(item.ppdbId); // Panggil fungsi hapus
                         },
                       ),
                     ],
